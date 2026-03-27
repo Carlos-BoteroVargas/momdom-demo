@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <link rel="icon" href="/favicon.png" type="image/x-icon">
 <title>MomDom — Set it down here.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -405,7 +406,7 @@ tr:hover td{background:var(--off);}
     <div class="steps">
       <div class="step"><div class="step-n">1</div><h4>Private Pilot</h4><p>200–300 founding families shape the product and lock in founding tier discounts permanently.</p><span class="s-tag">Now → Month 6</span></div>
       <div class="step"><div class="step-n">2</div><h4>Soft Launch</h4><p>Caregiver access, smart pantry, and commerce integrations go live for 300+ users.</p><span class="s-tag">Month 7–9</span></div>
-      <div class="step"><div class="step-n">3</div><h4>AI Goes Live</h4><p>The data families built during pilot trains the AI. Email parsing, voice, and predictive planning activate.</p><span class="s-tag">Month 10+</span></div>
+      <div class="step"><div class="step-n">3</div><h4>Full Predictions Go Live</h4><p>The data families built during pilot trains the AI. Email parsing, voice, and predictive planning activate.</p><span class="s-tag">Month 12+</span></div>
     </div>
   </section>
   </div>
@@ -539,7 +540,7 @@ const BALLOONS = [
   { id:'momcare',  icon:'💜', color:'#fce7f3', name:'Mom Care',         tag:'MVP 1',
     desc:'Capacity tracking, energy state, emotional check-ins. The app adjusts its suggestions based on how you actually feel today.',
     items:['Capacity state','Energy level','Emotional log','Weekly reflection','Recognition moments'] },
-  { id:'planning', icon:'📅', color:var(--cyan-l)||'#d4f0f8', name:'Planning & Tasks', tag:'MVP 1',
+  { id:'planning', icon:'📅', color:'#d4f0f8', name:'Planning & Tasks', tag:'MVP 1',
     desc:'Morning planning flow, capacity-aware day view, gentle checklists. Direction for the day without productivity pressure.',
     items:['Morning planning','Live day screen','Gentle checklists','Calendar awareness','Priority focus'] },
   { id:'homeschool',icon:'📚',color:'#fef9c3', name:'Homeschool',       tag:'Soft Launch',
@@ -550,8 +551,6 @@ const BALLOONS = [
     items:['Evening check-in','Pattern learning','Portfolio view','Weekly recognition','Insight captures'] },
 ];
 
-/* fix the planning color token which can't be inline CSS var() */
-BALLOONS[5].color = '#d4f0f8';
 
 function renderBalloons() {
   const grid = document.getElementById('balloon-grid');
