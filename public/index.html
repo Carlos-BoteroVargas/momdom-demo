@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MomDom — Set it down here.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══ TOKENS ═══════════════════════════════════════════════════ */
+:root {
+  --cyan:      #2EC4E6;
+  --cyan-d:    #1AA8C9;
+  --cyan-l:    #d4f0f8;
+  --navy:      #0B2A33;
+  --navy-m:    #1A4455;
+  --white:     #FFFFFF;
+  --off:       #F5FBFD;
+  --sand:      #E8F6FA;
+  --muted:     #5A8A9A;
+  --warm:      #B0C8D0;
+
+  --fd: 'Playfair Display', Georgia, serif;
+  --fb: 'Inter', sans-serif;
+  --r: 16px; --rs: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--off);color:var(--navy);font-family:var(--fb);font-weight:300;line-height:1.65;overflow-x:hidden;}
+
+/* ══ VIEWS ════════════════════════════════════════════════════ */
+.view{display:none;}
+.view.active{display:block;}
+
+/* ══ WRAP ═════════════════════════════════════════════════════ */
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
+nav{padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.logo{font-family:var(--fd);font-size:1.45rem;font-weight:700;color:var(--navy);letter-spacing:-.3px;cursor:pointer;}
+.logo span{color:var(--cyan-d);}
+.logo sub{font-size:.42em;font-family:var(--fb);font-weight:400;color:var(--muted);vertical-align:baseline;margin-left:2px;}
+.nav-r{display:flex;gap:10px;align-items:center;}
+.btn-nav{background:var(--navy);color:var(--white);padding:9px 20px;border-radius:50px;font-size:.82rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:background .2s;font-family:var(--fb);}
+.btn-nav:hover{background:var(--navy-m);}
+.btn-nav.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--warm);}
+.btn-nav.ghost:hover{border-color:var(--cyan);color:var(--cyan-d);}
+
+/* ══ HERO ═════════════════════════════════════════════════════ */
+.hero{min-height:88vh;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:60px 0 80px;}
+@media(max-width:720px){.hero{grid-template-columns:1fr;padding:40px 0 60px;gap:40px;}}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--sand);color:var(--cyan-d);font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:50px;margin-bottom:20px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+
+h1.hero-h{font-family:var(--fd);font-size:clamp(2.2rem,4.5vw,3.2rem);line-height:1.14;font-weight:700;color:var(--navy);letter-spacing:-.8px;margin-bottom:18px;}
+h1.hero-h em{font-style:italic;color:var(--cyan-d);}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:400px;margin-bottom:32px;line-height:1.7;}
+
+/* Dict card */
+.dict-card{background:var(--white);border-radius:20px;padding:36px 32px;box-shadow:0 20px 60px rgba(11,42,51,.08),0 4px 12px rgba(11,42,51,.04);position:relative;overflow:hidden;}
+.dict-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--cyan),var(--cyan-d));}
+.dict-word{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--navy);letter-spacing:-.5px;margin-bottom:2px;}
+.dict-pos{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:14px;font-family:var(--fd);}
+.dict-line{width:40px;height:2px;background:var(--cyan);border-radius:2px;margin-bottom:16px;}
+.dict-def{font-size:.97rem;color:var(--navy-m);line-height:1.7;font-family:var(--fd);font-style:italic;}
+.dict-def strong{font-style:normal;font-weight:700;color:var(--navy);}
+
+/* ══ FORM ═════════════════════════════════════════════════════ */
+.wl-form{display:flex;gap:8px;flex-wrap:wrap;}
+.wl-input{flex:1;min-width:190px;padding:13px 18px;border:1.5px solid var(--warm);border-radius:50px;background:var(--white);font-family:var(--fb);font-size:.9rem;color:var(--navy);outline:none;transition:border-color .2s,box-shadow .2s;}
+.wl-input::placeholder{color:#99b8c2;}
+.wl-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(46,196,230,.12);}
+.btn-cyan{background:var(--cyan);color:var(--navy);border:none;padding:13px 24px;border-radius:50px;font-family:var(--fb);font-size:.88rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s;}
+.btn-cyan:hover{background:var(--cyan-d);color:var(--white);transform:translateY(-1px);}
+.btn-cyan:disabled{opacity:.6;cursor:wait;transform:none;}
+.wl-note{font-size:.76rem;color:var(--muted);margin-top:10px;}
+.wl-note strong{color:var(--navy-m);}
+.form-msg{display:none;margin-top:12px;padding:12px 16px;border-radius:var(--rs);font-size:.87rem;font-weight:500;}
+.form-msg.ok{background:var(--cyan-l);color:var(--navy);display:block;}
+.form-msg.err{background:#fde8e0;color:#a04928;display:block;}
+
+/* ══ PROOF ════════════════════════════════════════════════════ */
+.proof{background:var(--cyan);padding:20px 0;margin:0 0 80px;}
+.proof-inner{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;}
+.proof-item{text-align:center;}
+.p-num{font-family:var(--fd);font-size:1.8rem;font-weight:700;line-height:1;}
+.p-lbl{font-size:.75rem;font-weight:500;opacity:.7;margin-top:2px;}
+.p-sep{width:1px;height:36px;background:rgba(11,42,51,.2);}
+
+/* ══ SECTION LABELS ═══════════════════════════════════════════ */
+.sec-lbl{font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan-d);font-weight:600;margin-bottom:12px;}
+.sec-ttl{font-family:var(--fd);font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:700;line-height:1.18;color:var(--navy);letter-spacing:-.3px;margin-bottom:48px;max-width:480px;}
+.sec-ttl em{font-style:italic;color:var(--cyan-d);}
+
+/* ══ BALLOONS ════════════════════════════════════════════════ */
+.balloons-section{padding:0 0 80px;}
+.balloons-intro{color:var(--muted);font-size:.95rem;max-width:540px;margin-bottom:40px;line-height:1.7;}
+.balloons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+@media(max-width:900px){.balloons-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.balloons-grid{grid-template-columns:1fr 1fr;}}
+
+.balloon-card{
+  background:var(--white);border:1px solid var(--sand);
+  border-radius:20px;padding:22px 18px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  cursor:pointer;transition:box-shadow .2s,transform .2s,border-color .2s;
+  position:relative;overflow:hidden;
+}
+.balloon-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(46,196,230,.06),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.balloon-card:hover{box-shadow:0 10px 30px rgba(11,42,51,.08);transform:translateY(-4px);border-color:var(--cyan);}
+.balloon-card:hover::after{opacity:1;}
+.balloon-card.active{border-color:var(--cyan);background:var(--cyan-l);}
+
+.b-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;flex-shrink:0;
+}
+.b-name{font-family:var(--fd);font-size:.95rem;font-weight:700;color:var(--navy);}
+.b-desc{font-size:.78rem;color:var(--muted);line-height:1.5;}
+.b-tag{font-size:.65rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:50px;background:var(--sand);color:var(--cyan-d);}
+
+/* Balloon detail panel */
+.balloon-detail{
+  margin-top:24px;background:var(--white);border-radius:20px;
+  border:1px solid var(--cyan);padding:28px 32px;
+  display:none;animation:slideDown .25s ease;
+}
+.balloon-detail.open{display:block;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.bd-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+.bd-title{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--navy);}
+.bd-body{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.bd-items{display:flex;flex-wrap:wrap;gap:8px;}
+.bd-pill{background:var(--sand);color:var(--navy);font-size:.75rem;font-weight:500;padding:5px 12px;border-radius:50px;}
+
+/* ══ FEATURES ════════════════════════════════════════════════ */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:80px;}
+@media(max-width:800px){.feat-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr;}}
+.feat-card{background:var(--white);border:1px solid var(--sand);border-radius:var(--r);padding:26px 22px;transition:box-shadow .2s,transform .2s;}
+.feat-card:hover{box-shadow:0 8px 28px rgba(11,42,51,.07);transform:translateY(-3px);}
+.f-icon{font-size:1.4rem;margin-bottom:14px;width:44px;height:44px;background:var(--sand);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.feat-card h3{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:7px;}
+.feat-card p{font-size:.85rem;color:var(--muted);line-height:1.6;}
+.f-tag{display:inline-block;margin-top:12px;font-size:.67rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:50px;}
+.t-now{color:var(--cyan-d);background:var(--cyan-l);}
+.t-soon{color:var(--muted);background:var(--sand);}
+.t-ai{color:#6b4f9c;background:#f0eafc;}
+
+/* ══ REWARDS ════════════════════════════════════════════════ */
+.rewards-sec{background:var(--navy);border-radius:24px;padding:60px 52px;margin:0 0 80px;position:relative;overflow:hidden;}
+@media(max-width:600px){.rewards-sec{padding:40px 28px;}}
+.rewards-sec::before{content:'';position:absolute;top:-100px;right:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(46,196,230,.15) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
+.rewards-sec .sec-lbl{color:rgba(255,255,255,.45);}
+.rewards-sec .sec-ttl{color:var(--white);}
+.tiers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+@media(max-width:700px){.tiers-grid{grid-template-columns:1fr;}}
+.tier-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:24px 20px;position:relative;}
+.tier-card.featured{background:rgba(46,196,230,.12);border-color:rgba(46,196,230,.35);}
+.t-badge{position:absolute;top:-1px;right:16px;background:var(--cyan);color:var(--navy);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 8px 8px;}
+.t-icon{font-size:1.5rem;margin-bottom:12px;}
+.t-name{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.t-range{font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:16px;}
+.t-perks{list-style:none;}
+.t-perks li{font-size:.83rem;color:rgba(255,255,255,.7);padding:5px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid rgba(255,255,255,.05);}
+.t-perks li:last-child{border:none;}
+.t-perks li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0;}
+
+/* ══ TIMELINE ════════════════════════════════════════════════ */
+.timeline-sec{background:linear-gradient(135deg,var(--cyan) 0%,var(--cyan-d) 100%);border-radius:24px;padding:56px 52px;margin:0 0 80px;position:relative;overflow:hidden;}
+@media(max-width:600px){.timeline-sec{padding:40px 28px;}}
+.timeline-sec .sec-lbl{color:rgba(11,42,51,.55);}
+.timeline-sec .sec-ttl{color:var(--navy);}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;}
+@media(max-width:680px){.steps{grid-template-columns:1fr;}}
+.steps::before{content:'';position:absolute;top:20px;left:44px;right:44px;height:1px;background:rgba(11,42,51,.15);}
+@media(max-width:680px){.steps::before{display:none;}}
+.step-n{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.95rem;font-weight:700;margin-bottom:16px;position:relative;z-index:1;}
+.step h4{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.step p{font-size:.83rem;color:rgba(11,42,51,.65);line-height:1.55;}
+.s-tag{display:inline-block;margin-top:10px;background:rgba(11,42,51,.12);color:var(--navy);font-size:.67rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:50px;}
+
+/* ══ CTA BOTTOM ══════════════════════════════════════════════ */
+.cta-bottom{text-align:center;padding:80px 0 100px;border-top:1px solid var(--sand);}
+.cta-bottom h2{font-family:var(--fd);font-size:clamp(1.9rem,3.8vw,2.8rem);font-weight:700;line-height:1.15;letter-spacing:-.4px;color:var(--navy);max-width:520px;margin:12px auto 16px;}
+.cta-bottom h2 em{font-style:italic;color:var(--cyan-d);}
+.cta-bottom .hero-sub{text-align:center;margin:0 auto 32px;}
+.cta-bottom .wl-form{justify-content:center;}
+
+/* ══ FOOTER ══════════════════════════════════════════════════ */
+footer{border-top:1px solid var(--sand);padding:24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+footer p{font-size:.78rem;color:var(--muted);}
+
+/* ══ ADMIN ═══════════════════════════════════════════════════ */
+#admin-view{background:var(--off);min-height:100vh;}
+.admin-login{max-width:400px;margin:100px auto;background:var(--white);border-radius:20px;padding:40px;box-shadow:0 20px 60px rgba(11,42,51,.08);text-align:center;}
+.admin-login h2{font-family:var(--fd);font-size:1.6rem;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.admin-login p{font-size:.88rem;color:var(--muted);margin-bottom:24px;}
+.admin-login input{width:100%;padding:13px 18px;border:1.5px solid var(--warm);border-radius:50px;font-family:var(--fb);font-size:.9rem;color:var(--navy);outline:none;margin-bottom:12px;text-align:center;}
+.admin-login input:focus{border-color:var(--cyan);}
+
+.admin-shell{display:none;}
+.admin-shell.open{display:block;}
+.admin-topbar{background:var(--navy);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.admin-topbar .logo{font-size:1rem;color:var(--white);}
+.admin-topbar .logo span{color:var(--cyan);}
+.a-tag{background:rgba(46,196,230,.15);color:var(--cyan);font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:50px;}
+.a-back{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:7px 16px;border-radius:50px;font-size:.78rem;cursor:pointer;font-family:var(--fb);transition:border-color .2s;}
+.a-back:hover{border-color:var(--cyan);color:var(--cyan);}
+
+.admin-body{max-width:1100px;margin:0 auto;padding:32px 28px;}
+
+/* KPIs */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+@media(max-width:700px){.kpi-row{grid-template-columns:1fr 1fr;}}
+.kpi{background:var(--white);border:1px solid var(--sand);border-radius:var(--rs);padding:16px 18px;}
+.kpi-v{font-family:var(--fd);font-size:1.8rem;font-weight:700;color:var(--navy);line-height:1;}
+.kpi-l{font-size:.72rem;color:var(--muted);margin-top:4px;font-weight:500;}
+.kpi-c{font-size:.7rem;font-weight:600;margin-top:6px;}
+.kpi-up{color:#2a9e6a;}.kpi-dn{color:#e05a3a;}.kpi-nt{color:var(--muted);}
+
+/* Tier bars */
+.tier-bars{background:var(--white);border:1px solid var(--sand);border-radius:var(--rs);padding:20px 22px;margin-bottom:24px;}
+.tier-bars h4{font-family:var(--fd);font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px;}
+.t-bar-row{margin-bottom:12px;}
+.t-bar-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-bottom:5px;}
+.t-bar-track{background:var(--sand);border-radius:50px;height:8px;overflow:hidden;}
+.t-bar-fill{height:100%;border-radius:50px;background:var(--cyan);transition:width .5s ease;}
+.t-bar-fill.p{background:#9b7ae0;}
+.t-bar-fill.f{background:#f59e0b;}
+
+/* Source chart */
+.src-chart{background:var(--white);border:1px solid var(--sand);border-radius:var(--rs);padding:20px 22px;margin-bottom:24px;}
+.src-chart h4{font-family:var(--fd);font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px;}
+.src-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.82rem;}
+.src-name{width:90px;color:var(--navy);font-weight:500;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.src-track{flex:1;background:var(--sand);border-radius:50px;height:7px;overflow:hidden;}
+.src-fill{height:100%;background:var(--cyan);border-radius:50px;}
+.src-cnt{font-size:.75rem;color:var(--muted);width:28px;text-align:right;}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.filter-bar select,.filter-bar input{padding:9px 14px;border:1.5px solid var(--warm);border-radius:50px;background:var(--white);font-family:var(--fb);font-size:.82rem;color:var(--navy);outline:none;transition:border-color .2s;}
+.filter-bar select:focus,.filter-bar input:focus{border-color:var(--cyan);}
+.filter-bar .btn-cyan{padding:9px 18px;font-size:.82rem;}
+
+/* Table */
+.tbl-wrap{overflow-x:auto;background:var(--white);border:1px solid var(--sand);border-radius:var(--r);}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+th{text-align:left;padding:10px 14px;font-size:.68rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--sand);background:var(--off);white-space:nowrap;}
+td{padding:11px 14px;border-bottom:1px solid var(--sand);color:var(--navy);vertical-align:middle;}
+tr:last-child td{border:none;}
+tr:hover td{background:var(--off);}
+
+.s-pill{display:inline-block;padding:3px 9px;border-radius:50px;font-size:.67rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;}
+.s-pending{background:#fef3c7;color:#92400e;}
+.s-invited{background:var(--cyan-l);color:var(--cyan-d);}
+.s-onboarded{background:#d1fae5;color:#065f46;}
+
+.tier-badge{display:inline-block;padding:3px 9px;border-radius:50px;font-size:.67rem;font-weight:600;}
+.tb-trailblazer{background:var(--cyan);color:var(--navy);}
+.tb-pioneer{background:#e0d7fb;color:#5b21b6;}
+.tb-founding{background:#fde68a;color:#92400e;}
+.tb-community{background:var(--sand);color:var(--muted);}
+
+.pagination{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:20px;padding:0 0 32px;}
+.pag-btn{background:var(--white);border:1.5px solid var(--warm);color:var(--navy);padding:7px 16px;border-radius:50px;font-family:var(--fb);font-size:.8rem;cursor:pointer;transition:border-color .2s;}
+.pag-btn:hover{border-color:var(--cyan);}
+.pag-btn:disabled{opacity:.4;cursor:not-allowed;}
+.pag-info{font-size:.8rem;color:var(--muted);}
+
+/* Loading spinner */
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:.9rem;}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--sand);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ══ ANIMATIONS ══════════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .6s ease both;}
+.d1{animation-delay:.08s;}.d2{animation-delay:.18s;}.d3{animation-delay:.28s;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     LANDING VIEW
+══════════════════════════════════════════════════════════ -->
+<div id="landing-view" class="view active">
+
+  <!-- NAV -->
+  <div class="wrap">
+  <nav>
+    <div class="logo" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
+    <div class="nav-r">
+      <button class="btn-nav ghost" onclick="showView('admin')">Admin ↗</button>
+      <a href="#waitlist" class="btn-nav">Join Waitlist</a>
+    </div>
+  </nav>
+  </div>
+
+  <!-- HERO -->
+  <div class="wrap">
+  <section class="hero">
+    <div class="fu">
+      <div class="eyebrow"><span class="dot"></span>Pilot opening soon</div>
+      <h1 class="hero-h">Your brain doesn't need<br>to carry <em>everything.</em></h1>
+      <p class="hero-sub">MomDom is the mental load of motherhood — and a place to finally put it down, so you don't carry it alone.</p>
+      <form class="wl-form" onsubmit="handleSignup(event,'hero-msg','hero-email','hero-btn')">
+        <input class="wl-input" id="hero-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
+        <button class="btn-cyan" id="hero-btn" type="submit">Set it down here →</button>
+      </form>
+      <p class="wl-note"><strong>No spam.</strong> Just updates as MomDom. grows.</p>
+      <div class="form-msg" id="hero-msg"></div>
+    </div>
+    <div class="fu d2">
+      <div class="dict-card">
+        <div class="dict-word">MomDom.</div>
+        <div class="dict-pos">noun &nbsp;/mäm·däm/</div>
+        <div class="dict-line"></div>
+        <div class="dict-def">The mental load of motherhood —<br><strong>and a place to put it</strong><br>so you don't carry it alone.</div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <!-- PROOF -->
+  <div class="proof">
+  <div class="wrap">
+  <div class="proof-inner" id="proof-strip">
+    <div class="proof-item"><div class="p-num" id="proof-total">…</div><div class="p-lbl">Moms waiting</div></div>
+    <div class="p-sep"></div>
+    <div class="proof-item"><div class="p-num" id="proof-trail">…</div><div class="p-lbl">Trailblazer spots left</div></div>
+    <div class="p-sep"></div>
+    <div class="proof-item"><div class="p-num">8</div><div class="p-lbl">Balloon systems</div></div>
+    <div class="p-sep"></div>
+    <div class="proof-item"><div class="p-num">$0</div><div class="p-lbl">Paid to acquire signups</div></div>
+  </div>
+  </div>
+  </div>
+
+  <!-- BALLOONS -->
+  <div class="wrap">
+  <section class="balloons-section">
+    <div class="sec-lbl">The Balloon System</div>
+    <h2 class="sec-ttl">Everything has <em>its own home.</em></h2>
+    <p class="balloons-intro">MomDom. is organized into connected domains called Balloons. Each one stores long-term context, allows quick actions, and feeds insight back into your daily workflow — all without AI in MVP 1.</p>
+
+    <div class="balloons-grid" id="balloon-grid">
+      <!-- injected by JS -->
+    </div>
+    <div class="balloon-detail" id="balloon-detail"></div>
+  </section>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="wrap">
+  <div class="sec-lbl">Here's how MomDom. helps</div>
+  <h2 class="sec-ttl">Everything connected. <em>Nothing dropped.</em></h2>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="f-icon">🧠</div><h3>Memory Engine</h3><p>Child profiles, clothing sizes, activity details, quick-reference notes. A reliable place for everything you'd otherwise hold mentally.</p><span class="f-tag t-now">MVP 1</span></div>
+    <div class="feat-card"><div class="f-icon">👗</div><h3>Closet Inventory</h3><p>See what already exists. Mark items owned, reduce decision fatigue, and stop buying what you already have tucked away.</p><span class="f-tag t-now">MVP 1</span></div>
+    <div class="feat-card"><div class="f-icon">✅</div><h3>Gentle Action</h3><p>Child-specific checklists and next-steps — lightweight support without productivity pressure. You feel supported, not managed.</p><span class="f-tag t-now">MVP 1</span></div>
+    <div class="feat-card"><div class="f-icon">🌅</div><h3>Morning Planning</h3><p>Daily starting experience. Calendar awareness, meal awareness, capacity-aware priorities that set the tone for the day ahead.</p><span class="f-tag t-now">MVP 1</span></div>
+    <div class="feat-card"><div class="f-icon">🌙</div><h3>Evening Check-In</h3><p>End-of-day reflection. Capture outcomes, record health updates, log emotional reality. Creates continuity between days.</p><span class="f-tag t-soon">Soft Launch</span></div>
+    <div class="feat-card"><div class="f-icon">🤖</div><h3>AI Ingestion Engine</h3><p>Forward a school email. Speak a reminder. The data families build now trains the AI that activates later — silently, correctly.</p><span class="f-tag t-ai">Post-Pilot AI</span></div>
+  </div>
+  </div>
+
+  <!-- REWARDS -->
+  <div class="wrap">
+  <section class="rewards-sec">
+    <div class="sec-lbl">Early adopter rewards</div>
+    <h2 class="sec-ttl">The sooner you join,<br>the <em>more you keep.</em></h2>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="t-icon">🌱</div><div class="t-name">Trailblazer</div><div class="t-range">First 100 signups</div>
+        <ul class="t-perks"><li>Lifetime 40% off any plan</li><li>First into the pilot cohort</li><li>Direct founder feedback channel</li><li>Founding member badge</li></ul>
+      </div>
+      <div class="tier-card featured">
+        <div class="t-badge">You are here</div>
+        <div class="t-icon">🌿</div><div class="t-name">Pioneer</div><div class="t-range">Signups #101 – #500</div>
+        <ul class="t-perks"><li>Lifetime 25% off any plan</li><li>Priority pilot waitlist</li><li>Beta feature previews</li><li>Pioneer badge in-app</li></ul>
+      </div>
+      <div class="tier-card">
+        <div class="t-icon">🌳</div><div class="t-name">Founding Family</div><div class="t-range">Signups #501 – #1000</div>
+        <ul class="t-perks"><li>Lifetime 15% off any plan</li><li>Early access at general launch</li><li>Founding Family badge</li></ul>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="wrap">
+  <section class="timeline-sec">
+    <div class="sec-lbl">The Roadmap</div>
+    <h2 class="sec-ttl">Where we're headed — and when.</h2>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><h4>Private Pilot</h4><p>200–300 founding families shape the product and lock in founding tier discounts permanently.</p><span class="s-tag">Now → Month 6</span></div>
+      <div class="step"><div class="step-n">2</div><h4>Soft Launch</h4><p>Caregiver access, smart pantry, and commerce integrations go live for 300+ users.</p><span class="s-tag">Month 7–9</span></div>
+      <div class="step"><div class="step-n">3</div><h4>AI Goes Live</h4><p>The data families built during pilot trains the AI. Email parsing, voice, and predictive planning activate.</p><span class="s-tag">Month 10+</span></div>
+    </div>
+  </section>
+  </div>
+
+  <!-- CTA -->
+  <div class="wrap">
+  <section class="cta-bottom" id="waitlist">
+    <div class="sec-lbl">Join the waitlist</div>
+    <h2>Be the first family <em>inside.</em></h2>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 32px;">So you can spend less time remembering — and more time being present.</p>
+    <form class="wl-form" style="justify-content:center;" onsubmit="handleSignup(event,'cta-msg','cta-email','cta-btn')">
+      <input class="wl-input" id="cta-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
+      <button class="btn-cyan" id="cta-btn" type="submit">Reserve My Spot →</button>
+    </form>
+    <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No credit card.</strong> Founding tier locked in at signup.</p>
+    <div class="form-msg" id="cta-msg" style="max-width:420px;margin:12px auto 0;"></div>
+  </section>
+
+  <footer>
+    <div class="logo" onclick="showView('landing')" style="cursor:pointer;">Mom<span>Dom</span><sub>.</sub></div>
+    <p>© 2026 MomDom. Built by a mom, designed from real life.</p>
+    <p>Privacy · Terms</p>
+  </footer>
+  </div>
+
+</div><!-- /landing-view -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     ADMIN VIEW
+══════════════════════════════════════════════════════════ -->
+<div id="admin-view" class="view">
+
+  <!-- Login screen -->
+  <div id="admin-login" class="admin-login">
+    <div class="logo" style="font-size:1.3rem;margin-bottom:20px;" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
+    <h2>Admin Access</h2>
+    <p>Enter your admin password to view the waitlist dashboard.</p>
+    <input type="password" id="admin-pw" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()"/>
+    <button class="btn-cyan" style="width:100%;border-radius:50px;" onclick="adminLogin()">Unlock Dashboard</button>
+    <div class="form-msg" id="login-msg" style="margin-top:12px;text-align:center;"></div>
+  </div>
+
+  <!-- Dashboard shell (hidden until auth) -->
+  <div id="admin-shell" class="admin-shell">
+
+    <div class="admin-topbar">
+      <div class="logo">Mom<span>Dom</span> <span style="font-family:var(--fb);font-size:.65rem;font-weight:400;color:rgba(255,255,255,.4);margin-left:6px;">Admin</span></div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="a-tag">Live Data</div>
+        <button class="a-back" onclick="showView('landing')">← Back to site</button>
+      </div>
+    </div>
+
+    <div class="admin-body">
+      <h3 style="font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:20px;">Waitlist Overview</h3>
+
+      <!-- KPIs -->
+      <div class="kpi-row" id="kpi-row">
+        <div class="loading"><span class="spinner"></span>Loading…</div>
+      </div>
+
+      <!-- Tier progress + source -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;" id="chart-row">
+        <!-- injected -->
+      </div>
+
+      <!-- Filters + Table -->
+      <div class="filter-bar">
+        <input type="text" id="f-search" placeholder="Search email…" style="min-width:180px;"/>
+        <select id="f-tier">
+          <option value="">All tiers</option>
+          <option value="trailblazer">🌱 Trailblazer</option>
+          <option value="pioneer">🌿 Pioneer</option>
+          <option value="founding">🌳 Founding</option>
+          <option value="community">Community</option>
+        </select>
+        <select id="f-status">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="invited">Invited</option>
+          <option value="onboarded">Onboarded</option>
+        </select>
+        <button class="btn-cyan" onclick="loadTable(1)">Filter</button>
+      </div>
+
+      <div class="tbl-wrap" id="tbl-wrap">
+        <div class="loading"><span class="spinner"></span>Loading signups…</div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+
+    </div><!-- /admin-body -->
+  </div><!-- /admin-shell -->
+
+</div><!-- /admin-view -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════════ -->
+<script>
+/* ── UTM capture ─────────────────────────────────────── */
+const UTM = Object.fromEntries(
+  ['utm_source','utm_medium','utm_campaign']
+    .map(k => [k, new URLSearchParams(location.search).get(k)])
+);
+
+/* ── View routing ────────────────────────────────────── */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(name + '-view').classList.add('active');
+  window.scrollTo(0, 0);
+  if (name === 'admin' && _adminPw) loadDashboard();
+}
+
+/* ── Balloon data (from MVP docs) ────────────────────── */
+const BALLOONS = [
+  { id:'health',   icon:'🏥', color:'#fde8e0', name:'Health',          tag:'MVP 1',
+    desc:'Allergy profiles, EpiPen locations, medication schedules, sick day mode. Critical info surfaces exactly when needed.',
+    items:['Allergy profiles','EpiPen locations','Medication rules','Sick Day Mode','Health timeline'] },
+  { id:'kids',     icon:'👧', color:'#e0d7fb', name:'Kids',             tag:'MVP 1',
+    desc:'Child profiles with clothing sizes, shoe sizes, activity details, school info, and important notes per child.',
+    items:['Child profiles','Clothing sizes','Shoe sizes','Activity details','School info'] },
+  { id:'meals',    icon:'🍽️',  color:'#fef3c7', name:'Meals',            tag:'MVP 1',
+    desc:'Meal memory, family preferences, dietary needs, and meal-day awareness that feeds into morning planning.',
+    items:['Meal history','Family preferences','Dietary needs','Meal-day awareness','Recipe notes'] },
+  { id:'household',icon:'🏠', color:'#d1fae5', name:'Household',        tag:'MVP 1',
+    desc:'Home inventory, maintenance notes, and household details that stop you from holding it all in your head.',
+    items:['Closet inventory','Home maintenance','Household notes','Supply tracking','Service contacts'] },
+  { id:'momcare',  icon:'💜', color:'#fce7f3', name:'Mom Care',         tag:'MVP 1',
+    desc:'Capacity tracking, energy state, emotional check-ins. The app adjusts its suggestions based on how you actually feel today.',
+    items:['Capacity state','Energy level','Emotional log','Weekly reflection','Recognition moments'] },
+  { id:'planning', icon:'📅', color:var(--cyan-l)||'#d4f0f8', name:'Planning & Tasks', tag:'MVP 1',
+    desc:'Morning planning flow, capacity-aware day view, gentle checklists. Direction for the day without productivity pressure.',
+    items:['Morning planning','Live day screen','Gentle checklists','Calendar awareness','Priority focus'] },
+  { id:'homeschool',icon:'📚',color:'#fef9c3', name:'Homeschool',       tag:'Soft Launch',
+    desc:'Curriculum tracking and learning logs — intentionally held out of MVP 1 to keep scope clean.',
+    items:['Curriculum notes','Learning logs','Activity tracking','Progress records'] },
+  { id:'memory',   icon:'✨', color:'#e0f2fe', name:'Memory/Reflection', tag:'MVP 1',
+    desc:'Evening check-in, daily close loop, weekly reflection. MomDom remembers so you don\'t have to.',
+    items:['Evening check-in','Pattern learning','Portfolio view','Weekly recognition','Insight captures'] },
+];
+
+/* fix the planning color token which can't be inline CSS var() */
+BALLOONS[5].color = '#d4f0f8';
+
+function renderBalloons() {
+  const grid = document.getElementById('balloon-grid');
+  grid.innerHTML = BALLOONS.map(b => `
+    <div class="balloon-card" id="bc-${b.id}" onclick="toggleBalloon('${b.id}')">
+      <div class="b-icon" style="background:${b.color}">${b.icon}</div>
+      <div class="b-name">${b.name}</div>
+      <div class="b-desc">${b.desc.slice(0,60)}…</div>
+      <span class="b-tag">${b.tag}</span>
+    </div>
+  `).join('');
+}
+
+let activeBalloon = null;
+function toggleBalloon(id) {
+  const detail = document.getElementById('balloon-detail');
+  const b = BALLOONS.find(x => x.id === id);
+
+  // Deactivate previous
+  if (activeBalloon) document.getElementById('bc-' + activeBalloon)?.classList.remove('active');
+
+  if (activeBalloon === id) {
+    detail.classList.remove('open');
+    detail.innerHTML = '';
+    activeBalloon = null;
+    return;
+  }
+
+  activeBalloon = id;
+  document.getElementById('bc-' + id).classList.add('active');
+
+  detail.innerHTML = `
+    <div class="bd-header">
+      <div style="width:48px;height:48px;border-radius:14px;background:${b.color};display:flex;align-items:center;justify-content:center;font-size:1.4rem;">${b.icon}</div>
+      <div class="bd-title">${b.name} Balloon</div>
+      <span class="b-tag" style="margin-left:auto;">${b.tag}</span>
+    </div>
+    <div class="bd-body">${b.desc}</div>
+    <div class="bd-items">${b.items.map(i => `<span class="bd-pill">${i}</span>`).join('')}</div>
+  `;
+  detail.classList.add('open');
+}
+
+/* ── Signup handler ──────────────────────────────────── */
+const tierLabels = {
+  trailblazer: '🌱 Trailblazer — 40% off for life',
+  pioneer:     '🌿 Pioneer — 25% off for life',
+  founding:    '🌳 Founding Family — 15% off for life',
+  community:   '🌐 Community member',
+};
+
+async function handleSignup(e, msgId, inputId, btnId) {
+  e.preventDefault();
+  const email = document.getElementById(inputId).value.trim();
+  const btn   = document.getElementById(btnId);
+  const msg   = document.getElementById(msgId);
+
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  msg.className = 'form-msg';
+
+  try {
+    const res = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, ...UTM }),
+    });
+    const data = await res.json();
+
+    if (data.duplicate) {
+      msg.className = 'form-msg ok';
+      msg.textContent = `You're already on the list at #${data.position}! (${tierLabels[data.tier]})`;
+    } else if (data.success) {
+      msg.className = 'form-msg ok';
+      msg.innerHTML = `🎉 You're in at <strong>#${data.position}</strong>! Your tier: <strong>${tierLabels[data.tier]}</strong>. Watch your inbox for pilot updates.`;
+      e.target.reset();
+      loadProofStrip(); // refresh live numbers
+    } else {
+      throw new Error(data.error || 'Unknown error');
+    }
+  } catch(err) {
+    msg.className = 'form-msg err';
+    msg.textContent = err.message || 'Something went wrong. Please try again.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = btnId === 'hero-btn' ? 'Set it down here →' : 'Reserve My Spot →';
+  }
+}
+
+/* ── Proof strip (live) ──────────────────────────────── */
+async function loadProofStrip() {
+  try {
+    // Use a public stats-lite endpoint — no password needed for total count
+    // We'll just do a quick signup count check
+    const res = await fetch('/api/stats?password=' + encodeURIComponent(_adminPw || 'momdom2026'));
+    if (!res.ok) return;
+    const d = await res.json();
+    if (d.total !== undefined) {
+      document.getElementById('proof-total').textContent = d.total;
+      document.getElementById('proof-trail').textContent = d.trailblazersRemaining;
+    }
+  } catch {}
+}
+
+/* ── Admin auth ──────────────────────────────────────── */
+let _adminPw = '';
+
+function adminLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  const msg = document.getElementById('login-msg');
+  if (!pw) return;
+  _adminPw = pw;
+  // Verify by hitting stats
+  fetch('/api/stats?password=' + encodeURIComponent(pw))
+    .then(r => r.json())
+    .then(d => {
+      if (d.error === 'Unauthorized') {
+        _adminPw = '';
+        msg.className = 'form-msg err';
+        msg.textContent = 'Incorrect password.';
+      } else {
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('admin-shell').classList.add('open');
+        loadDashboard();
+      }
+    })
+    .catch(() => {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Could not reach the server.';
+    });
+}
+
+/* ── Dashboard loader ────────────────────────────────── */
+async function loadDashboard() {
+  await Promise.all([loadStats(), loadTable(1)]);
+}
+
+async function loadStats() {
+  const kpiRow   = document.getElementById('kpi-row');
+  const chartRow = document.getElementById('chart-row');
+  kpiRow.innerHTML   = `<div class="loading"><span class="spinner"></span>Loading…</div>`;
+  chartRow.innerHTML = '';
+
+  try {
+    const res = await fetch('/api/stats?password=' + encodeURIComponent(_adminPw));
+    const d = await res.json();
+
+    // KPIs
+    kpiRow.innerHTML = `
+      <div class="kpi"><div class="kpi-v">${d.total}</div><div class="kpi-l">Total Signups</div><div class="kpi-c kpi-up">↑ ${d.recentSignups?.slice(-1)[0]?.count || 0} today</div></div>
+      <div class="kpi"><div class="kpi-v">${d.trailblazersRemaining}</div><div class="kpi-l">Trailblazer spots left</div><div class="kpi-c kpi-dn">${d.tiers.trailblazers} claimed</div></div>
+      <div class="kpi"><div class="kpi-v">${d.statuses.invited}</div><div class="kpi-l">Pilot invites sent</div><div class="kpi-c kpi-nt">${d.statuses.onboarded} onboarded</div></div>
+      <div class="kpi"><div class="kpi-v">${d.bySource?.find(s=>s.source==='direct')?.count || 0}</div><div class="kpi-l">Direct (organic)</div><div class="kpi-c kpi-up">↑ $0 CAC</div></div>
+    `;
+
+    // Tier bars
+    const maxT = Math.max(d.tiers.trailblazers, d.tiers.pioneers, d.tiers.founding, 1);
+    chartRow.innerHTML = `
+      <div class="tier-bars">
+        <h4>Tier Distribution</h4>
+        <div class="t-bar-row">
+          <div class="t-bar-label"><span>🌱 Trailblazer</span><span>${d.tiers.trailblazers} / 100</span></div>
+          <div class="t-bar-track"><div class="t-bar-fill" style="width:${Math.min(100,d.tiers.trailblazers)}%"></div></div>
+        </div>
+        <div class="t-bar-row">
+          <div class="t-bar-label"><span>🌿 Pioneer</span><span>${d.tiers.pioneers} / 400</span></div>
+          <div class="t-bar-track"><div class="t-bar-fill p" style="width:${Math.min(100,d.tiers.pioneers/4)}%"></div></div>
+        </div>
+        <div class="t-bar-row">
+          <div class="t-bar-label"><span>🌳 Founding</span><span>${d.tiers.founding} / 500</span></div>
+          <div class="t-bar-track"><div class="t-bar-fill f" style="width:${Math.min(100,d.tiers.founding/5)}%"></div></div>
+        </div>
+      </div>
+      <div class="src-chart">
+        <h4>Acquisition Sources</h4>
+        ${(d.bySource||[]).map(s => {
+          const max = d.bySource[0]?.count || 1;
+          return `<div class="src-row"><div class="src-name">${s.source}</div><div class="src-track"><div class="src-fill" style="width:${Math.round(s.count/max*100)}%"></div></div><div class="src-cnt">${s.count}</div></div>`;
+        }).join('')}
+        ${!d.bySource?.length ? '<p style="font-size:.82rem;color:var(--muted);">No data yet.</p>' : ''}
+      </div>
+    `;
+  } catch(err) {
+    kpiRow.innerHTML = `<div class="form-msg err" style="display:block;">Failed to load stats.</div>`;
+  }
+}
+
+let _currentPage = 1;
+
+async function loadTable(page) {
+  _currentPage = page;
+  const wrap = document.getElementById('tbl-wrap');
+  const pag  = document.getElementById('pagination');
+  wrap.innerHTML = `<div class="loading"><span class="spinner"></span>Loading signups…</div>`;
+  pag.innerHTML  = '';
+
+  const search = document.getElementById('f-search')?.value || '';
+  const tier   = document.getElementById('f-tier')?.value   || '';
+  const status = document.getElementById('f-status')?.value || '';
+
+  const params = new URLSearchParams({
+    password: _adminPw,
+    page,
+    ...(search && { search }),
+    ...(tier   && { tier }),
+    ...(status && { status }),
+  });
+
+  try {
+    const res = await fetch('/api/signups?' + params);
+    const d = await res.json();
+
+    if (!d.rows?.length) {
+      wrap.innerHTML = `<div class="loading">No signups found.</div>`;
+      return;
+    }
+
+    wrap.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Tier</th>
+            <th>Status</th>
+            <th>Source</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${d.rows.map(r => `
+            <tr>
+              <td style="color:var(--muted);font-weight:600;">${r.position}</td>
+              <td>${r.email}</td>
+              <td><span class="tier-badge tb-${r.tier}">${tierEmoji(r.tier)} ${cap(r.tier)}</span></td>
+              <td><span class="s-pill s-${r.status}">${cap(r.status)}</span></td>
+              <td style="color:var(--muted);font-size:.75rem;">${r.utm_source || 'direct'}</td>
+              <td style="color:var(--muted);font-size:.75rem;">${fmtDate(r.createdAt)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    // Pagination
+    const totalPages = Math.ceil(d.total / d.pageSize);
+    if (totalPages > 1) {
+      pag.innerHTML = `
+        <button class="pag-btn" onclick="loadTable(${page-1})" ${page<=1?'disabled':''}>← Prev</button>
+        <span class="pag-info">Page ${page} of ${totalPages} &nbsp;(${d.total} total)</span>
+        <button class="pag-btn" onclick="loadTable(${page+1})" ${page>=totalPages?'disabled':''}>Next →</button>
+      `;
+    }
+
+  } catch(err) {
+    wrap.innerHTML = `<div class="form-msg err" style="display:block;margin:16px;">Failed to load data.</div>`;
+  }
+}
+
+/* ── Helpers ─────────────────────────────────────────── */
+function cap(s){ return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+function tierEmoji(t){ return {trailblazer:'🌱',pioneer:'🌿',founding:'🌳',community:'🌐'}[t]||''; }
+function fmtDate(d){
+  if (!d) return '—';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+/* ── Init ─────────────────────────────────────────────── */
+renderBalloons();
+loadProofStrip();
+
+// Route /admin directly
+if (location.hash === '#admin' || location.pathname === '/admin') {
+  showView('admin');
+}
+</script>
+</body>
+</html>

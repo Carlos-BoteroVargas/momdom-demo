@@ -1,0 +1,17 @@
+{
+  "name": "momdom-demo",
+  "version": "1.0.0",
+  "description": "MomDom waitlist demo — Netlify + MongoDB Atlas",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
