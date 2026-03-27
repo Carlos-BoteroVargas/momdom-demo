@@ -98,7 +98,7 @@ h1.hero-h em{font-style:italic;color:var(--cyan-d);}
 
 /* ══ BALLOONS ════════════════════════════════════════════════ */
 .balloons-section{padding:0 0 80px;}
-.balloons-intro{color:var(--muted);font-size:.95rem;max-width:540px;margin-bottom:40px;line-height:1.7;}
+.balloons-intro{color:var(--muted);font-size:.95rem;max-width:600px;margin-bottom:40px;line-height:1.7;}
 .balloons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
 @media(max-width:900px){.balloons-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:500px){.balloons-grid{grid-template-columns:1fr 1fr;}}
@@ -350,10 +350,11 @@ tr:hover td{background:var(--off);}
   <!-- BALLOONS -->
   <div class="wrap">
   <section class="balloons-section">
-    <div class="sec-lbl">The Balloon System</div>
-    <h2 class="sec-ttl">Everything has <em>its own home.</em></h2>
-    <p class="balloons-intro">MomDom. is organized into connected domains called Balloons. Each one stores long-term context, allows quick actions, and feeds insight back into your daily workflow — all without AI in MVP 1.</p>
-
+    <!-- <div class="sec-lbl">The Balloon System</div> -->
+    <h2 class="sec-ttl">You <em>don't</em> have to do this alone.</h2>
+    <p class="balloons-intro">MomDom helps you carry less so you have more space for what matters most.</p>
+    <p class="balloons-intro">Each interconnected domain — <em>Balloon</em> — stores long-term context, allows quick actions, and feeds insight back into your daily workflow.</p>
+`
     <div class="balloons-grid" id="balloon-grid">
       <!-- injected by JS -->
     </div>
@@ -363,16 +364,21 @@ tr:hover td{background:var(--off);}
 
   <!-- FEATURES -->
   <div class="wrap">
-  <div class="sec-lbl">Here's how MomDom. helps</div>
-  <h2 class="sec-ttl">Everything connected. <em>Nothing dropped.</em></h2>
+  <!-- <div class="sec-lbl">Here's how MomDom. helps</div> -->
+  <h2 class="sec-ttl">Here's how MomDom. <em>helps</em></h2>
   <div class="feat-grid">
-    <div class="feat-card"><div class="f-icon">🧠</div><h3>Memory Engine</h3><p>Child profiles, clothing sizes, activity details, quick-reference notes. A reliable place for everything you'd otherwise hold mentally.</p><span class="f-tag t-now">MVP 1</span></div>
-    <div class="feat-card"><div class="f-icon">👗</div><h3>Closet Inventory</h3><p>See what already exists. Mark items owned, reduce decision fatigue, and stop buying what you already have tucked away.</p><span class="f-tag t-now">MVP 1</span></div>
+    <div class="feat-card"><div class="f-icon">🧠</div><h3>Say it once.</h3><p>Thoughts, reminders, lists and life.</p><span class="f-tag t-now">Remembers</span></div>
+    <div class="feat-card"><div class="f-icon">🤖</div><h3>Everything has a place.</h3><p>MomDom. gently organizes what youshare, so your brain doesn’t have to work so hard.</p><span class="f-tag t-now">Organizes</span></div>
+    <div class="feat-card"><div class="f-icon">✅</div><h3>Right when you need it.</h3><p>MomDom. brings things back at the right moment, so nothing important slips through.</p><span class="f-tag t-now">Reminds</span></div>
+    <!-- <div class="feat-card"><div class="f-icon">🧠</div><h3>Memory Engine</h3><p>Child profiles, clothing sizes, activity details, quick-reference notes. A reliable place for everything you'd otherwise hold mentally.</p><span class="f-tag t-now">MVP 1</span></div> -->
+    <!-- <div class="feat-card"><div class="f-icon">👗</div><h3>Closet Inventory</h3><p>See what already exists. Mark items owned, reduce decision fatigue, and stop buying what you already have tucked away.</p><span class="f-tag t-now">MVP 1</span></div>
     <div class="feat-card"><div class="f-icon">✅</div><h3>Gentle Action</h3><p>Child-specific checklists and next-steps — lightweight support without productivity pressure. You feel supported, not managed.</p><span class="f-tag t-now">MVP 1</span></div>
     <div class="feat-card"><div class="f-icon">🌅</div><h3>Morning Planning</h3><p>Daily starting experience. Calendar awareness, meal awareness, capacity-aware priorities that set the tone for the day ahead.</p><span class="f-tag t-now">MVP 1</span></div>
     <div class="feat-card"><div class="f-icon">🌙</div><h3>Evening Check-In</h3><p>End-of-day reflection. Capture outcomes, record health updates, log emotional reality. Creates continuity between days.</p><span class="f-tag t-soon">Soft Launch</span></div>
-    <div class="feat-card"><div class="f-icon">🤖</div><h3>AI Ingestion Engine</h3><p>Forward a school email. Speak a reminder. The data families build now trains the AI that activates later — silently, correctly.</p><span class="f-tag t-ai">Post-Pilot AI</span></div>
+    <div class="feat-card"><div class="f-icon">🤖</div><h3>AI Ingestion Engine</h3><p>Forward a school email. Speak a reminder. The data families build now trains the AI that activates later — silently, correctly.</p><span class="f-tag t-ai">Post-Pilot AI</span></div> -->
   </div>
+  <p class="balloons-intro">So you can spend less time remembering - and more time being <em>present</em>.</p>
+ 
   </div>
 
   <!-- REWARDS -->
@@ -381,12 +387,12 @@ tr:hover td{background:var(--off);}
     <div class="sec-lbl">Early adopter rewards</div>
     <h2 class="sec-ttl">The sooner you join,<br>the <em>more you keep.</em></h2>
     <div class="tiers-grid">
-      <div class="tier-card">
+      <div class="tier-card featured">
+        <div class="t-badge">You are here</div>
         <div class="t-icon">🌱</div><div class="t-name">Trailblazer</div><div class="t-range">First 100 signups</div>
         <ul class="t-perks"><li>Lifetime 40% off any plan</li><li>First into the pilot cohort</li><li>Direct founder feedback channel</li><li>Founding member badge</li></ul>
       </div>
-      <div class="tier-card featured">
-        <div class="t-badge">You are here</div>
+      <div class="tier-card">
         <div class="t-icon">🌿</div><div class="t-name">Pioneer</div><div class="t-range">Signups #101 – #500</div>
         <ul class="t-perks"><li>Lifetime 25% off any plan</li><li>Priority pilot waitlist</li><li>Beta feature previews</li><li>Pioneer badge in-app</li></ul>
       </div>
@@ -415,13 +421,13 @@ tr:hover td{background:var(--off);}
   <div class="wrap">
   <section class="cta-bottom" id="waitlist">
     <div class="sec-lbl">Join the waitlist</div>
-    <h2>Be the first family <em>inside.</em></h2>
-    <p class="hero-sub" style="text-align:center;margin:0 auto 32px;">So you can spend less time remembering — and more time being present.</p>
+    <h2>There’s so much to remember and <em>keep</em> track of.</h2>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 32px;">It’s exhausting to do it on your own.<br> —  MomDom. helps you carry <em>less</em>.</p>
     <form class="wl-form" style="justify-content:center;" onsubmit="handleSignup(event,'cta-msg','cta-email','cta-btn')">
       <input class="wl-input" id="cta-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
       <button class="btn-cyan" id="cta-btn" type="submit">Reserve My Spot →</button>
     </form>
-    <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No credit card.</strong> Founding tier locked in at signup.</p>
+    <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No spam. </strong> Just updates as MomDom. grows</p>
     <div class="form-msg" id="cta-msg" style="max-width:420px;margin:12px auto 0;"></div>
   </section>
 
@@ -442,7 +448,7 @@ tr:hover td{background:var(--off);}
 
   <!-- Login screen -->
   <div id="admin-login" class="admin-login">
-    <div class="logo" style="font-size:1.3rem;margin-bottom:20px;" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
+    <div class="logo" style="font-size:1.5rem;margin-bottom:20px;" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
     <h2>Admin Access</h2>
     <p>Enter your admin password to view the waitlist dashboard.</p>
     <input type="password" id="admin-pw" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()"/>
