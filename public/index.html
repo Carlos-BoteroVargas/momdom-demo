@@ -136,6 +136,33 @@ h1.hero-h em{font-style:italic;color:var(--cyan-d);}
 }
 .balloon-detail.open{display:block;}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+/* Mobile modal overlay */
+.balloon-modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(11,42,51,.5);z-index:100;
+  align-items:flex-end;justify-content:center;animation:fadeIn .2s ease;
+}
+.balloon-modal-overlay.open{
+  display:flex;
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.balloon-modal{
+  background:var(--white);border-radius:20px 20px 0 0;padding:28px 20px 32px;
+  width:100%;max-height:80vh;overflow-y:auto;animation:slideUp .25s ease;
+  box-shadow:0 -4px 20px rgba(11,42,51,.1);
+}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.bd-close{
+  position:absolute;top:16px;right:16px;background:var(--sand);border:none;
+  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;color:var(--navy);
+  transition:background .2s;
+}
+.bd-close:hover{background:var(--cyan-l);}
+
+@media(max-width:720px){
+  .balloon-detail{display:none !important;}
+}
 .bd-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
 .bd-title{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--navy);}
 .bd-body{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:16px;}
@@ -362,20 +389,21 @@ tr:hover td{background:var(--off);}
   </section>
   </div>
 
+  <!-- Mobile modal overlay -->
+  <div class="balloon-modal-overlay" id="balloon-modal-overlay" onclick="if(event.target.id==='balloon-modal-overlay')closeBalloonModal()">
+    <div class="balloon-modal" id="balloon-modal-content">
+      <!-- injected by JS -->
+    </div>
+    <button class="bd-close" onclick="closeBalloonModal()">✕</button>
+  </div>
+
   <!-- FEATURES -->
   <div class="wrap">
-  <!-- <div class="sec-lbl">Here's how MomDom. helps</div> -->
   <h2 class="sec-ttl">Here's how MomDom. <em>helps</em></h2>
   <div class="feat-grid">
     <div class="feat-card"><div class="f-icon">🧠</div><h3>Say it once.</h3><p>Thoughts, reminders, lists and life.</p><span class="f-tag t-now">Remembers</span></div>
-    <div class="feat-card"><div class="f-icon">🤖</div><h3>Everything has a place.</h3><p>MomDom. gently organizes what youshare, so your brain doesn’t have to work so hard.</p><span class="f-tag t-now">Organizes</span></div>
+    <div class="feat-card"><div class="f-icon">🤖</div><h3>Everything has a place.</h3><p>MomDom. gently organizes what you share, so your brain doesn’t have to work so hard.</p><span class="f-tag t-now">Organizes</span></div>
     <div class="feat-card"><div class="f-icon">✅</div><h3>Right when you need it.</h3><p>MomDom. brings things back at the right moment, so nothing important slips through.</p><span class="f-tag t-now">Reminds</span></div>
-    <!-- <div class="feat-card"><div class="f-icon">🧠</div><h3>Memory Engine</h3><p>Child profiles, clothing sizes, activity details, quick-reference notes. A reliable place for everything you'd otherwise hold mentally.</p><span class="f-tag t-now">MVP 1</span></div> -->
-    <!-- <div class="feat-card"><div class="f-icon">👗</div><h3>Closet Inventory</h3><p>See what already exists. Mark items owned, reduce decision fatigue, and stop buying what you already have tucked away.</p><span class="f-tag t-now">MVP 1</span></div>
-    <div class="feat-card"><div class="f-icon">✅</div><h3>Gentle Action</h3><p>Child-specific checklists and next-steps — lightweight support without productivity pressure. You feel supported, not managed.</p><span class="f-tag t-now">MVP 1</span></div>
-    <div class="feat-card"><div class="f-icon">🌅</div><h3>Morning Planning</h3><p>Daily starting experience. Calendar awareness, meal awareness, capacity-aware priorities that set the tone for the day ahead.</p><span class="f-tag t-now">MVP 1</span></div>
-    <div class="feat-card"><div class="f-icon">🌙</div><h3>Evening Check-In</h3><p>End-of-day reflection. Capture outcomes, record health updates, log emotional reality. Creates continuity between days.</p><span class="f-tag t-soon">Soft Launch</span></div>
-    <div class="feat-card"><div class="f-icon">🤖</div><h3>AI Ingestion Engine</h3><p>Forward a school email. Speak a reminder. The data families build now trains the AI that activates later — silently, correctly.</p><span class="f-tag t-ai">Post-Pilot AI</span></div> -->
   </div>
   <p class="balloons-intro">So you can spend less time remembering - and more time being <em>present</em>.</p>
  
@@ -572,23 +600,11 @@ function renderBalloons() {
 
 let activeBalloon = null;
 function toggleBalloon(id) {
+  const isMobile = window.innerWidth <= 720;
   const detail = document.getElementById('balloon-detail');
+  const modal = document.getElementById('balloon-modal-overlay');
   const b = BALLOONS.find(x => x.id === id);
-
-  // Deactivate previous
-  if (activeBalloon) document.getElementById('bc-' + activeBalloon)?.classList.remove('active');
-
-  if (activeBalloon === id) {
-    detail.classList.remove('open');
-    detail.innerHTML = '';
-    activeBalloon = null;
-    return;
-  }
-
-  activeBalloon = id;
-  document.getElementById('bc-' + id).classList.add('active');
-
-  detail.innerHTML = `
+  const detailHTML = `
     <div class="bd-header">
       <div style="width:48px;height:48px;border-radius:14px;background:${b.color};display:flex;align-items:center;justify-content:center;font-size:1.4rem;">${b.icon}</div>
       <div class="bd-title">${b.name} Balloon</div>
@@ -597,7 +613,41 @@ function toggleBalloon(id) {
     <div class="bd-body">${b.desc}</div>
     <div class="bd-items">${b.items.map(i => `<span class="bd-pill">${i}</span>`).join('')}</div>
   `;
-  detail.classList.add('open');
+
+  // Deactivate previous
+  if (activeBalloon) document.getElementById('bc-' + activeBalloon)?.classList.remove('active');
+
+  if (activeBalloon === id) {
+    if (isMobile) {
+      modal.classList.remove('open');
+    } else {
+      detail.classList.remove('open');
+    }
+    detail.innerHTML = '';
+    activeBalloon = null;
+    return;
+  }
+
+  activeBalloon = id;
+  document.getElementById('bc-' + id).classList.add('active');
+
+  if (isMobile) {
+    // Show as modal on mobile
+    document.getElementById('balloon-modal-content').innerHTML = detailHTML;
+    modal.classList.add('open');
+  } else {
+    // Show inline on desktop
+    detail.innerHTML = detailHTML;
+    detail.classList.add('open');
+  }
+}
+
+function closeBalloonModal() {
+  document.getElementById('balloon-modal-overlay').classList.remove('open');
+  if (activeBalloon) {
+    document.getElementById('bc-' + activeBalloon)?.classList.remove('active');
+    activeBalloon = null;
+  }
 }
 
 /* ── Signup handler ──────────────────────────────────── */

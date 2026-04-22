@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MomDom waitlist demo — Netlify + MongoDB Atlas",
   "scripts": {
-    "dev": "netlify dev"
+    "dev": "npx netlify dev"
   },
   "dependencies": {
     "mongodb": "^6.3.0"
