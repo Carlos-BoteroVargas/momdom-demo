@@ -44,7 +44,6 @@ body{background:var(--off);color:var(--navy);font-family:var(--fb);font-weight:3
 nav{padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
 .logo{font-family:var(--fd);font-size:1.45rem;font-weight:700;color:var(--navy);letter-spacing:-.3px;cursor:pointer;}
 .logo span{color:var(--cyan-d);}
-.logo sub{font-size:.42em;font-family:var(--fb);font-weight:400;color:var(--muted);vertical-align:baseline;margin-left:2px;}
 .nav-r{display:flex;gap:10px;align-items:center;}
 .btn-nav{background:var(--navy);color:var(--white);padding:9px 20px;border-radius:50px;font-size:.82rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:background .2s;font-family:var(--fb);}
 .btn-nav:hover{background:var(--navy-m);}
@@ -100,77 +99,31 @@ h1.hero-h em{font-style:italic;color:var(--cyan-d);}
 .sec-ttl em{font-style:italic;color:var(--cyan-d);}
 
 /* ══ BALLOONS ════════════════════════════════════════════════ */
-.balloons-section{padding:40px 80px;}
+.balloons-section{padding:40px 0 80px;}
 .balloons-intro{color:var(--muted);font-size:.95rem;max-width:600px;margin-bottom:40px;line-height:1.7;}
 .balloons-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:900px){.balloons-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:500px){.balloons-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.balloons-grid{grid-template-columns:1fr;}}
 
 .balloon-card{
   background:var(--white);border:1px solid var(--sand);
-  border-radius:20px;padding:22px 18px;
-  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
-  cursor:pointer;transition:box-shadow .2s,transform .2s,border-color .2s;
+  border-radius:20px;padding:24px 20px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  transition:box-shadow .2s,transform .2s,border-color .2s;
   position:relative;overflow:hidden;
 }
-.balloon-card::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(46,196,230,.06),transparent);
-  opacity:0;transition:opacity .2s;
-}
-.balloon-card:hover{box-shadow:0 10px 30px rgba(11,42,51,.08);transform:translateY(-4px);border-color:var(--cyan);}
-.balloon-card:hover::after{opacity:1;}
-.balloon-card.active{border-color:var(--cyan);background:var(--cyan-l);}
+.balloon-card:hover{box-shadow:0 10px 30px rgba(11,42,51,.08);transform:translateY(-3px);border-color:var(--warm);}
 
 .b-icon{
   width:48px;height:48px;border-radius:14px;
   display:flex;align-items:center;justify-content:center;
   font-size:1.4rem;flex-shrink:0;
 }
-.b-name{font-family:var(--fd);font-size:.95rem;font-weight:700;color:var(--navy);}
-.b-desc{font-size:.78rem;color:var(--muted);line-height:1.5;}
-.b-tag{font-size:.65rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:50px;background:var(--sand);color:var(--cyan-d);}
+.b-name{font-family:var(--fd);font-size:1rem;font-weight:700;color:var(--navy);}
+.b-desc{font-size:.85rem;color:var(--muted);line-height:1.6;}
+.b-items{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.b-pill{background:var(--off);border:1px solid var(--warm);color:var(--navy);font-size:.72rem;font-weight:500;padding:4px 10px;border-radius:50px;}
 
-/* Balloon detail panel */
-.balloon-detail{
-  margin-top:24px;background:var(--white);border-radius:20px;
-  border:1px solid var(--cyan);padding:28px 32px;
-  display:none;animation:slideDown .25s ease;
-}
-.balloon-detail.open{display:block;}
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-
-/* Mobile modal overlay */
-.balloon-modal-overlay{
-  display:none;position:fixed;inset:0;background:rgba(11,42,51,.5);z-index:100;
-  align-items:flex-end;justify-content:center;animation:fadeIn .2s ease;
-}
-.balloon-modal-overlay.open{
-  display:flex;
-}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-.balloon-modal{
-  background:var(--white);border-radius:20px 20px 0 0;padding:28px 20px 32px;
-  width:100%;max-height:80vh;overflow-y:auto;animation:slideUp .25s ease;
-  box-shadow:0 -4px 20px rgba(11,42,51,.1);
-}
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.bd-close{
-  position:absolute;top:16px;right:16px;background:var(--sand);border:none;
-  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.2rem;
-  display:flex;align-items:center;justify-content:center;color:var(--navy);
-  transition:background .2s;
-}
-.bd-close:hover{background:var(--cyan-l);}
-
-@media(max-width:720px){
-  .balloon-detail{display:none !important;}
-}
-.bd-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-.bd-title{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--navy);}
-.bd-body{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:16px;}
-.bd-items{display:flex;flex-wrap:wrap;gap:8px;}
-.bd-pill{background:var(--sand);color:var(--navy);font-size:.75rem;font-weight:500;padding:5px 12px;border-radius:50px;}
 
 /* ══ FEATURES ════════════════════════════════════════════════ */
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:80px;}
@@ -343,16 +296,18 @@ tr:hover td{background:var(--off);}
 .founding-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 @media(max-width:700px){.founding-tiers{grid-template-columns:1fr;}}
 .founding-card{background:var(--off);border:1px solid var(--warm);border-radius:var(--r);padding:24px 20px;position:relative;}
-.founding-card.featured{background:rgba(185,166,227,.08);border-color:var(--lavender);}
-.founding-card.early{background:rgba(159,211,176,.08);border-color:var(--sage);}
-.fc-badge{position:absolute;top:-1px;right:16px;background:var(--lavender);color:var(--white);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 8px 8px;}
+.founding-card.featured{background:rgba(159,211,176,.08);border-color:var(--sage);}
+.founding-card.early{background:rgba(185,166,227,.08);border-color:var(--lavender);}
+.founding-card.general{background:rgba(242,167,181,.08);border-color:var(--blush);}
+.fc-badge{position:absolute;top:-1px;right:16px;background:var(--sage);color:var(--white);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 8px 8px;}
 .fc-name{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:4px;}
 .fc-sub{font-size:.75rem;color:var(--muted);margin-bottom:16px;font-style:italic;}
 .fc-perks{list-style:none;}
 .fc-perks li{font-size:.82rem;color:var(--navy);padding:5px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--warm);}
 .fc-perks li:last-child{border:none;}
-.fc-perks li::before{content:'\2713';color:var(--lavender);font-weight:700;flex-shrink:0;}
-.founding-card.early .fc-perks li::before{color:var(--sage);}
+.fc-perks li::before{content:'\2713';color:var(--sage);font-weight:700;flex-shrink:0;}
+.founding-card.early .fc-perks li::before{color:var(--lavender);}
+.founding-card.general .fc-perks li::before{color:var(--blush);}
 
 /* ══ VISION SECTION ═══════════════════════════════════════════ */
 .vision-sec{background:var(--off);border-radius:24px;padding:60px 52px;margin:0 0 80px;border:1px solid var(--warm);}
@@ -380,7 +335,7 @@ tr:hover td{background:var(--off);}
   <div class="hero-bg">
   <div class="wrap">
   <nav>
-    <div class="logo" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
+    <div class="logo" onclick="showView('landing')">Mom<span>Dom.</span></div>
     <div class="nav-r">
       <button class="btn-nav ghost" onclick="showView('admin')">Admin ↗</button>
       <a href="#waitlist" class="btn-nav">Join Waitlist</a>
@@ -422,16 +377,7 @@ tr:hover td{background:var(--off);}
     <div class="balloons-grid" id="balloon-grid">
       <!-- injected by JS -->
     </div>
-    <div class="balloon-detail" id="balloon-detail"></div>
   </section>
-  </div>
-
-  <!-- Mobile modal overlay -->
-  <div class="balloon-modal-overlay" id="balloon-modal-overlay" onclick="if(event.target.id==='balloon-modal-overlay')closeBalloonModal()">
-    <div class="balloon-modal" id="balloon-modal-content">
-      <!-- injected by JS -->
-    </div>
-    <button class="bd-close" onclick="closeBalloonModal()">✕</button>
   </div>
 
   <!-- FEATURES -->
@@ -464,7 +410,7 @@ tr:hover td{background:var(--off);}
       <div class="founding-card featured">
         <div class="fc-badge">Now open</div>
         <div class="fc-name">Founding Circle</div>
-        <div class="fc-sub">First 25 families</div>
+        <div class="fc-sub">First 50 families</div>
         <ul class="fc-perks">
           <li>Lifetime founding pricing</li>
           <li>Priority pilot access</li>
@@ -483,7 +429,7 @@ tr:hover td{background:var(--off);}
           <li>Early access badge</li>
         </ul>
       </div>
-      <div class="founding-card">
+      <div class="founding-card general">
         <div class="fc-name">General Launch</div>
         <div class="fc-sub">Public rollout phase</div>
         <ul class="fc-perks">
@@ -523,11 +469,9 @@ tr:hover td{background:var(--off);}
   <section class="cta-bottom" id="waitlist">
     <div class="sec-lbl">Join the waitlist</div>
     <h2>There's already <em>too much</em><br>to keep track of.</h2>
-    <p class="hero-sub" style="text-align:center;margin:0 auto 12px;">Appointments. School information. Grocery lists. Symptoms. Tasks. Forms. Routines. Notes. Mental tabs. Daily life.</p>
-    <p class="hero-sub" style="text-align:center;margin:0 auto 12px;">MomDom was built to help moms stop carrying all of it alone.</p>
-    <p class="hero-sub" style="text-align:center;margin:0 auto 24px;">A place to organize family life, reduce mental overload, and keep the important things right where you need them &#8212; without trying to hold everything in your head at once.</p>
-    <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:var(--navy);margin-bottom:20px;">Set it down here.</p>
-    <p class="hero-sub" style="text-align:center;margin:0 auto 28px;">Join the waitlist for early access and be part of building a smarter, more supportive way to manage family life.</p>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 16px;">Appointments. School information. Grocery lists. Symptoms. Tasks. Forms. Routines. Mental tabs. Daily life.</p>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 16px;">MomDom helps moms stop carrying all of it alone.</p>
+    <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:var(--navy);margin-bottom:28px;">Set it down here.</p>
     <form class="wl-form" style="justify-content:center;" onsubmit="handleSignup(event,'cta-msg','cta-email','cta-btn')">
       <input class="wl-input" id="cta-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
       <button class="btn-cyan" id="cta-btn" type="submit">Join Waitlist &#8594;</button>
@@ -537,7 +481,7 @@ tr:hover td{background:var(--off);}
   </section>
 
   <footer>
-    <div class="logo" onclick="showView('landing')" style="cursor:pointer;">Mom<span>Dom</span><sub>.</sub></div>
+    <div class="logo" onclick="showView('landing')" style="cursor:pointer;">Mom<span>Dom.</span></div>
     <p>© 2026 MomDom. Built by a mom, designed from real life.</p>
     <p>Privacy · Terms</p>
   </footer>
@@ -553,7 +497,7 @@ tr:hover td{background:var(--off);}
 
   <!-- Login screen -->
   <div id="admin-login" class="admin-login">
-    <div class="logo" style="font-size:1.5rem;margin-bottom:20px;" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
+    <div class="logo" style="font-size:1.5rem;margin-bottom:20px;" onclick="showView('landing')">Mom<span>Dom.</span></div>
     <h2>Admin Access</h2>
     <p>Enter your admin password to view the waitlist dashboard.</p>
     <input type="password" id="admin-pw" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()"/>
@@ -660,65 +604,13 @@ const BALLOONS = [
 function renderBalloons() {
   const grid = document.getElementById('balloon-grid');
   grid.innerHTML = BALLOONS.map(b => `
-    <div class="balloon-card" id="bc-${b.id}" onclick="toggleBalloon('${b.id}')">
+    <div class="balloon-card" id="bc-${b.id}">
       <div class="b-icon" style="background:${b.color}">${b.icon}</div>
       <div class="b-name">${b.name}</div>
-      <div class="b-desc">${b.desc.slice(0,60)}…</div>
-      <span class="b-tag">${b.tag}</span>
+      <div class="b-desc">${b.desc}</div>
+      <div class="b-items">${b.items.map(i => `<span class="b-pill">${i}</span>`).join('')}</div>
     </div>
   `).join('');
-}
-
-let activeBalloon = null;
-function toggleBalloon(id) {
-  const isMobile = window.innerWidth <= 720;
-  const detail = document.getElementById('balloon-detail');
-  const modal = document.getElementById('balloon-modal-overlay');
-  const b = BALLOONS.find(x => x.id === id);
-  const detailHTML = `
-    <div class="bd-header">
-      <div style="width:48px;height:48px;border-radius:14px;background:${b.color};display:flex;align-items:center;justify-content:center;font-size:1.4rem;">${b.icon}</div>
-      <div class="bd-title">${b.name} Balloon</div>
-      <span class="b-tag" style="margin-left:auto;">${b.tag}</span>
-    </div>
-    <div class="bd-body">${b.desc}</div>
-    <div class="bd-items">${b.items.map(i => `<span class="bd-pill">${i}</span>`).join('')}</div>
-  `;
-
-  // Deactivate previous
-  if (activeBalloon) document.getElementById('bc-' + activeBalloon)?.classList.remove('active');
-
-  if (activeBalloon === id) {
-    if (isMobile) {
-      modal.classList.remove('open');
-    } else {
-      detail.classList.remove('open');
-    }
-    detail.innerHTML = '';
-    activeBalloon = null;
-    return;
-  }
-
-  activeBalloon = id;
-  document.getElementById('bc-' + id).classList.add('active');
-
-  if (isMobile) {
-    // Show as modal on mobile
-    document.getElementById('balloon-modal-content').innerHTML = detailHTML;
-    modal.classList.add('open');
-  } else {
-    // Show inline on desktop
-    detail.innerHTML = detailHTML;
-    detail.classList.add('open');
-  }
-}
-
-function closeBalloonModal() {
-  document.getElementById('balloon-modal-overlay').classList.remove('open');
-  if (activeBalloon) {
-    document.getElementById('bc-' + activeBalloon)?.classList.remove('active');
-    activeBalloon = null;
-  }
 }
 
 /* ── Signup handler ──────────────────────────────────── */
