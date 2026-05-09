@@ -1,0 +1,282 @@
+I have reviewed the landing page and here is my feedback.
+
+There’s a lot here that I genuinely love:
+• the emotional tone
+• the structure
+• the softness
+• the clarity of the product direction
+• the balloon ecosystem concept
+• the overall feeling that this is becoming something substantial and scalable
+
+As I went through everything carefully, I realized the biggest thing I want to protect moving forward is the emotional identity of MomDom.
+
+I want the experience to feel:
+• relieving
+• emotionally intelligent
+• calming
+• supportive
+• quietly powerful
+
+—not overly corporate, productivity-app, or aggressive SaaS startup feeling.
+
+I think the strongest direction is:
+emotional softness + intelligent systems together.
+
+Below are my section-by-section notes, positioning adjustments, and updated wording direction.
+
+Overall Direction
+
+The updated site is significantly stronger structurally and does a much better job communicating that MomDom is a real ecosystem/platform rather than just a concept.
+
+The original blue-background version felt:
+• immersive
+• calming
+• emotionally relieving
+• soft
+• emotionally distinct
+
+The newer version is stronger from a usability and product perspective, but some sections are starting to feel slightly too:
+• corporate
+• productivity-focused
+• SaaS/app-platform oriented
+
+I want the overall experience to feel:
+“finally, something that understands how my brain feels.”
+
+—not:
+“here’s another organization app.”
+
+The experience should feel like relief first and organization second.
+
+Hero Section
+
+This is currently the strongest part of the site overall.
+
+Things I really like:
+• the emotional tone
+• typography hierarchy
+• “set it down here” messaging
+• the definition-style card
+• overall softness/minimalism
+• CTA placement and clarity
+
+The emotional identity here feels the closest to the original vision of MomDom.
+
+I’d like to explore:
+• bringing slightly more of the immersive blue-background atmosphere back into this section
+• slightly more emotional depth/warmth
+• preserving spaciousness and softness as the site evolves
+
+This section should immediately create:
+relief,
+understanding,
+and emotional exhale.
+
+Balloon / Ecosystem Section
+
+I’d like to simplify and tighten this section so it feels more focused, emotionally clear, and aligned with the actual MVP1 structure.
+
+Right now I think having 8 balloons starts making the section feel slightly too expansive and feature-heavy this early on.
+
+I’d like to reduce this section down to 6 core categories:
+• Mom’s Mental Tabs
+• Kids
+• Health
+• Meals
+• Household
+• Planning
+
+I think this will:
+• create more clarity
+• reduce visual overwhelm
+• strengthen emotional focus
+• improve mobile readability
+• better align the landing page with the MVP1 structure
+
+Updated copy direction:
+
+Mom’s Mental Tabs
+
+A place to set down the thoughts you don’t want to keep carrying mentally.
+
+Reminders, notes, to-dos, mental tabs, and all the little things moms are trying not to forget — kept somewhere safe so your brain can let go of them for a while.
+
+Kids
+
+A place for the details that make up everyday family life.
+
+Sizes, activities, routines, schedules, important information, growth tracking, and the things that change faster than you can keep up with mentally.
+
+Health
+
+For the things you never want to forget later.
+
+Medications, allergies, appointments, symptoms, records, and family health information — organized and easy to access when you need it most.
+
+Meals
+
+Because dinner shouldn’t start from scratch every night.
+
+Keep track of meals, grocery needs, family favorites, food ideas, and the meals everyone will actually eat.
+
+Household
+
+Helping the household run without everything living in mom’s head.
+
+Tasks, reminders, routines, notes, household information, and the daily moving pieces of family life — all in one place.
+
+Planning
+
+Right there when you need it.
+
+Appointments, practices, school events, activities, schedules, and the constant flow of family logistics — organized clearly and simply.
+
+
+“Here’s How MomDom Helps” Section
+
+I think this is one of the strongest sections on the site already.
+
+Updated copy direction:
+
+Say it once
+
+Stop repeating and re-explaining everything.
+
+Important information, reminders, schedules, notes, and details stay in one organized place the whole family can reference when needed.
+
+Everything has a place
+
+Because moms carry too many scattered mental tabs already.
+
+Household information, meals, appointments, school details, health records, notes, and daily life — organized clearly and easy to find later.
+
+Right when you need it
+
+The right information, right when real life asks for it.
+
+Quick access to the things families need most — without digging through texts, papers, screenshots, calendars, or mental checklists.
+
+
+Founding Circle / Early Access Section
+
+I’d like to evolve this section so it feels more aligned with the emotional identity of MomDom while still communicating momentum, exclusivity, and long-term platform potential.
+
+Updated direction:
+
+Built intentionally from the beginning.
+
+MomDom is being rolled out in phases with a limited number of early families helping shape the platform as it grows.
+
+Early supporters receive:
+• priority access
+• founding member recognition
+• early feature access
+• permanent founding pricing benefits
+• opportunities to help shape future development
+
+Founding Circle
+Initial founding families
+
+• Lifetime founding pricing
+• Priority pilot access
+• Early feature testing access
+• Founding member badge
+• Direct feedback opportunities during development
+
+Early Access
+Next rollout phase
+
+• Reduced founding pricing
+• Early launch access
+• Beta feature previews
+• Early access badge
+
+General Launch
+Public rollout phase
+
+• Standard onboarding access
+• Public feature rollout access
+
+I’d also like to remove:
+• “Paid to acquire signups”
+• “Trailblazer” terminology
+• heavily metric-oriented/growth-funnel language
+
+One thing I’d also love your thoughts on is the actual size of the initial founding/pilot group.
+
+Right now the previously listed 200–300 family range feels potentially larger than what we may actually need for the earliest intentional rollout phase.
+
+My instinct is that a smaller founding group may actually feel:
+• more intentional
+• more premium
+• more emotionally aligned with the brand
+• easier to manage from a feedback/community standpoint
+
+Something more in the range of:
+• first 25 families
+• first 50 families
+• or another intentionally limited founding cohort
+
+feels directionally more aligned to me right now.
+
+That said, I’d really value your perspective here from a product, rollout, validation, and systems standpoint.
+
+
+Future Vision / Expansion Section
+
+I do want this section to communicate scale, intelligence, long-term platform vision, and future household optimization capabilities.
+
+I’m okay with this section feeling slightly more technologically forward than the rest of the site because by this point we’ve already established the emotional identity and trust side of the brand.
+
+Updated wording direction:
+
+Built to learn your family over time.
+
+The more MomDom is used, the more helpful and personalized it becomes.
+
+As moms add information, routines, preferences, schedules, health details, household patterns, and day-to-day family life into the system, MomDom begins learning how each family actually functions.
+
+Over time, the platform is designed to provide increasingly intelligent support through features like:
+• predictive reminders
+• household pattern recognition
+• family scheduling optimization
+• meal and grocery intelligence
+• contextual health tracking
+• cross-household coordination
+• intelligent family support systems
+
+The goal is not simply storing information.
+
+It’s creating a system that helps reduce the operational and mental load families carry every day by becoming more aware, connected, and supportive over time.
+
+Designed to support real family life.
+
+A platform built to grow alongside families — helping moms spend less time mentally managing everything alone and more time being present in the moments that matter most.
+
+Final CTA / Closing Section
+
+I think this section is emotionally very important because it’s the final feeling people leave the site with before signing up.
+
+I want this section to bring the experience back to:
+• relief
+• understanding
+• emotional recognition
+• support
+
+after the more platform/technology-focused sections above it.
+
+Updated wording direction:
+
+There’s already too much to keep track of.
+
+Appointments. School information. Grocery lists. Symptoms. Tasks. Forms. Routines. Notes. Mental tabs. Daily life.
+
+MomDom was built to help moms stop carrying all of it alone.
+
+A place to organize family life, reduce mental overload, and keep the important things right where you need them — without trying to hold everything in your head at once.
+
+Set it down here.
+
+Join the waitlist for early access and be part of building a smarter, more supportive way to manage family life.
+
+[Join Waitlist CTA]

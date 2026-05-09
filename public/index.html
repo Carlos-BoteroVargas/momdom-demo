@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -19,8 +19,11 @@
   --white:     #FFFFFF;
   --off:       #F5FBFD;
   --sand:      #E8F6FA;
-  --muted:     #5A8A9A;
-  --warm:      #B0C8D0;
+  --muted:     #A4ACBC;
+  --warm:      #DCE4E9;
+  --lavender:  #B9A6E3;
+  --sage:      #9FD3B0;
+  --blush:     #F2A7B5;
 
   --fd: 'Playfair Display', Georgia, serif;
   --fb: 'Inter', sans-serif;
@@ -99,7 +102,7 @@ h1.hero-h em{font-style:italic;color:var(--cyan-d);}
 /* ══ BALLOONS ════════════════════════════════════════════════ */
 .balloons-section{padding:0 0 80px;}
 .balloons-intro{color:var(--muted);font-size:.95rem;max-width:600px;margin-bottom:40px;line-height:1.7;}
-.balloons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.balloons-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:900px){.balloons-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:500px){.balloons-grid{grid-template-columns:1fr 1fr;}}
 
@@ -310,6 +313,56 @@ tr:hover td{background:var(--off);}
 .spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--sand);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+/* ══ HERO BG ══════════════════════════════════════════════════ */
+.hero-bg{background:var(--cyan);padding-bottom:20px;}
+.hero-bg nav .logo{color:var(--white);}
+.hero-bg nav .logo span{color:var(--white);}
+.hero-bg nav .logo sub{color:rgba(255,255,255,.55);}
+.hero-bg .btn-nav.ghost{background:transparent;border-color:rgba(255,255,255,.4);color:var(--white);}
+.hero-bg .btn-nav.ghost:hover{border-color:var(--white);color:var(--white);}
+.hero-bg .btn-nav:not(.ghost){background:var(--white);color:var(--navy);border:none;}
+.hero-bg .btn-nav:not(.ghost):hover{background:rgba(255,255,255,.9);}
+.hero-bg h1.hero-h{color:var(--white);}
+.hero-bg h1.hero-h em{color:var(--white);opacity:.85;}
+.hero-bg .hero-sub{color:rgba(255,255,255,.85);}
+.hero-bg .eyebrow{background:rgba(255,255,255,.2);color:var(--white);}
+.hero-bg .dot{background:var(--white);}
+.hero-bg .wl-note{color:rgba(255,255,255,.65);}
+.hero-bg .wl-note strong{color:var(--white);}
+.hero-bg .btn-cyan{background:var(--navy);color:var(--white);}
+.hero-bg .btn-cyan:hover{background:var(--navy-m);}
+.hero-bg .dict-card::before{background:linear-gradient(90deg,var(--navy),var(--navy-m));}
+.hero-balloon{width:140px;display:block;margin:0 auto 8px;}
+
+/* ══ FOUNDING SECTION ═════════════════════════════════════════ */
+.founding-sec{background:var(--white);border:1px solid var(--warm);border-radius:24px;padding:60px 52px;margin:0 0 80px;position:relative;overflow:hidden;}
+@media(max-width:600px){.founding-sec{padding:40px 28px;}}
+.founding-intro{font-size:.95rem;color:var(--muted);max-width:600px;margin-bottom:20px;line-height:1.7;}
+.founding-perks{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;}
+.founding-perks li{font-size:.78rem;color:var(--navy);background:var(--off);border:1px solid var(--warm);padding:5px 14px;border-radius:50px;}
+.founding-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+@media(max-width:700px){.founding-tiers{grid-template-columns:1fr;}}
+.founding-card{background:var(--off);border:1px solid var(--warm);border-radius:var(--r);padding:24px 20px;position:relative;}
+.founding-card.featured{background:rgba(185,166,227,.08);border-color:var(--lavender);}
+.founding-card.early{background:rgba(159,211,176,.08);border-color:var(--sage);}
+.fc-badge{position:absolute;top:-1px;right:16px;background:var(--lavender);color:var(--white);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 8px 8px;}
+.fc-name{font-family:var(--fd);font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.fc-sub{font-size:.75rem;color:var(--muted);margin-bottom:16px;font-style:italic;}
+.fc-perks{list-style:none;}
+.fc-perks li{font-size:.82rem;color:var(--navy);padding:5px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid var(--warm);}
+.fc-perks li:last-child{border:none;}
+.fc-perks li::before{content:'\2713';color:var(--lavender);font-weight:700;flex-shrink:0;}
+.founding-card.early .fc-perks li::before{color:var(--sage);}
+
+/* ══ VISION SECTION ═══════════════════════════════════════════ */
+.vision-sec{background:var(--off);border-radius:24px;padding:60px 52px;margin:0 0 80px;border:1px solid var(--warm);}
+@media(max-width:600px){.vision-sec{padding:40px 28px;}}
+.vision-body{font-size:.95rem;color:var(--muted);line-height:1.8;max-width:700px;margin-bottom:20px;}
+.vision-body strong{color:var(--navy);font-weight:600;}
+.vision-features{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+.vision-features li{font-size:.78rem;color:var(--navy);background:var(--white);border:1px solid var(--warm);padding:5px 14px;border-radius:50px;}
+.vision-close{font-size:.88rem;color:var(--navy);line-height:1.75;max-width:620px;font-family:var(--fd);font-style:italic;}
+
 /* ══ ANIMATIONS ══════════════════════════════════════════════ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fadeUp .6s ease both;}
@@ -323,7 +376,8 @@ tr:hover td{background:var(--off);}
 ══════════════════════════════════════════════════════════ -->
 <div id="landing-view" class="view active">
 
-  <!-- NAV -->
+  <!-- NAV + HERO -->
+  <div class="hero-bg">
   <div class="wrap">
   <nav>
     <div class="logo" onclick="showView('landing')">Mom<span>Dom</span><sub>.</sub></div>
@@ -334,54 +388,37 @@ tr:hover td{background:var(--off);}
   </nav>
   </div>
 
-  <!-- HERO -->
   <div class="wrap">
   <section class="hero">
     <div class="fu">
-      <div class="eyebrow"><span class="dot"></span>Pilot opening soon</div>
-      <h1 class="hero-h">Your brain doesn't need<br>to carry <em>everything.</em></h1>
-      <p class="hero-sub">MomDom is the mental load of motherhood — and a place to finally put it down, so you don't carry it alone.</p>
+      <div class="eyebrow"><span class="dot"></span>Founding pilot opening soon</div>
+      <h1 class="hero-h">Your brain doesn't need to carry <em>everything.</em></h1>
+      <p class="hero-sub">MomDom is the mental load of motherhood — and a place to finally set it down, so you don't carry it alone.</p>
       <form class="wl-form" onsubmit="handleSignup(event,'hero-msg','hero-email','hero-btn')">
         <input class="wl-input" id="hero-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
-        <button class="btn-cyan" id="hero-btn" type="submit">Set it down here →</button>
+        <button class="btn-cyan" id="hero-btn" type="submit">Set it down here &#8594;</button>
       </form>
       <p class="wl-note"><strong>No spam.</strong> Just updates as MomDom. grows.</p>
       <div class="form-msg" id="hero-msg"></div>
     </div>
-    <div class="fu d2">
+    <div class="fu d2" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <img src="/logo-sm.png" alt="MomDom balloons" class="hero-balloon"/>
       <div class="dict-card">
         <div class="dict-word">MomDom.</div>
-        <div class="dict-pos">noun &nbsp;/mäm·däm/</div>
+        <div class="dict-pos">noun &nbsp;/m&#228;m&#183;d&#228;m/</div>
         <div class="dict-line"></div>
-        <div class="dict-def">The mental load of motherhood —<br><strong>and a place to put it</strong><br>so you don't carry it alone.</div>
+        <div class="dict-def">The mental load of motherhood &#8212;<br><strong>and a place to put it</strong><br>so you don't carry it alone.</div>
       </div>
     </div>
   </section>
   </div>
-
-  <!-- PROOF -->
-  <div class="proof">
-  <div class="wrap">
-  <div class="proof-inner" id="proof-strip">
-    <div class="proof-item"><div class="p-num" id="proof-total">…</div><div class="p-lbl">Moms waiting</div></div>
-    <div class="p-sep"></div>
-    <div class="proof-item"><div class="p-num" id="proof-trail">…</div><div class="p-lbl">Trailblazer spots left</div></div>
-    <div class="p-sep"></div>
-    <div class="proof-item"><div class="p-num">8</div><div class="p-lbl">Balloon systems</div></div>
-    <div class="p-sep"></div>
-    <div class="proof-item"><div class="p-num">$0</div><div class="p-lbl">Paid to acquire signups</div></div>
-  </div>
-  </div>
-  </div>
+  </div><!-- /hero-bg -->
 
   <!-- BALLOONS -->
   <div class="wrap">
   <section class="balloons-section">
-    <!-- <div class="sec-lbl">The Balloon System</div> -->
-    <h2 class="sec-ttl">You <em>don't</em> have to do this alone.</h2>
-    <p class="balloons-intro">MomDom helps you carry less so you have more space for what matters most.</p>
-    <p class="balloons-intro">Each interconnected domain — <em>Balloon</em> — stores long-term context, allows quick actions, and feeds insight back into your daily workflow.</p>
-`
+    <h2 class="sec-ttl">You <em>don't</em> have to carry all of this alone.</h2>
+    <p class="balloons-intro">Six areas of family life &#8212; organized so your brain can finally let go of some of what it's been holding.</p>
     <div class="balloons-grid" id="balloon-grid">
       <!-- injected by JS -->
     </div>
@@ -401,47 +438,83 @@ tr:hover td{background:var(--off);}
   <div class="wrap">
   <h2 class="sec-ttl">Here's how MomDom. <em>helps</em></h2>
   <div class="feat-grid">
-    <div class="feat-card"><div class="f-icon">🧠</div><h3>Say it once.</h3><p>Thoughts, reminders, lists and life.</p><span class="f-tag t-now">Remembers</span></div>
-    <div class="feat-card"><div class="f-icon">🤖</div><h3>Everything has a place.</h3><p>MomDom. gently organizes what you share, so your brain doesn’t have to work so hard.</p><span class="f-tag t-now">Organizes</span></div>
-    <div class="feat-card"><div class="f-icon">✅</div><h3>Right when you need it.</h3><p>MomDom. brings things back at the right moment, so nothing important slips through.</p><span class="f-tag t-now">Reminds</span></div>
+    <div class="feat-card"><div class="f-icon">&#128221;</div><h3>Say it once.</h3><p>Stop repeating and re-explaining everything. Important information, reminders, schedules, notes, and details stay in one organized place the whole family can reference when needed.</p><span class="f-tag t-now">Remembers</span></div>
+    <div class="feat-card"><div class="f-icon">&#128193;</div><h3>Everything has a place.</h3><p>Because moms carry too many scattered mental tabs already. Household information, meals, appointments, school details, health records, notes, and daily life &#8212; organized clearly and easy to find later.</p><span class="f-tag t-now">Organizes</span></div>
+    <div class="feat-card"><div class="f-icon">&#10024;</div><h3>Right when you need it.</h3><p>The right information, right when real life asks for it. Quick access to the things families need most &#8212; without digging through texts, papers, screenshots, calendars, or mental checklists.</p><span class="f-tag t-now">Retrieves</span></div>
   </div>
-  <p class="balloons-intro">So you can spend less time remembering - and more time being <em>present</em>.</p>
+  <p class="balloons-intro">So you can spend less time mentally managing everything &#8212; and more time being <em>present</em>.</p>
  
   </div>
 
-  <!-- REWARDS -->
+  <!-- FOUNDING CIRCLE -->
   <div class="wrap">
-  <section class="rewards-sec">
-    <div class="sec-lbl">Early adopter rewards</div>
-    <h2 class="sec-ttl">The sooner you join,<br>the <em>more you keep.</em></h2>
-    <div class="tiers-grid">
-      <div class="tier-card featured">
-        <div class="t-badge">You are here</div>
-        <div class="t-icon">🌱</div><div class="t-name">Trailblazer</div><div class="t-range">First 100 signups</div>
-        <ul class="t-perks"><li>Lifetime 40% off any plan</li><li>First into the pilot cohort</li><li>Direct founder feedback channel</li><li>Founding member badge</li></ul>
+  <section class="founding-sec">
+    <div class="sec-lbl">Early access</div>
+    <h2 class="sec-ttl">Built <em>intentionally</em><br>from the beginning.</h2>
+    <p class="founding-intro">MomDom is being rolled out in phases with a limited number of early families helping shape the platform as it grows.</p>
+    <p class="founding-intro" style="margin-bottom:12px;">Early supporters receive:</p>
+    <ul class="founding-perks">
+      <li>Priority access</li>
+      <li>Founding member recognition</li>
+      <li>Early feature access</li>
+      <li>Permanent founding pricing benefits</li>
+      <li>Opportunities to help shape future development</li>
+    </ul>
+    <div class="founding-tiers">
+      <div class="founding-card featured">
+        <div class="fc-badge">Now open</div>
+        <div class="fc-name">Founding Circle</div>
+        <div class="fc-sub">First 25 families</div>
+        <ul class="fc-perks">
+          <li>Lifetime founding pricing</li>
+          <li>Priority pilot access</li>
+          <li>Early feature testing access</li>
+          <li>Founding member badge</li>
+          <li>Direct feedback opportunities during development</li>
+        </ul>
       </div>
-      <div class="tier-card">
-        <div class="t-icon">🌿</div><div class="t-name">Pioneer</div><div class="t-range">Signups #101 – #500</div>
-        <ul class="t-perks"><li>Lifetime 25% off any plan</li><li>Priority pilot waitlist</li><li>Beta feature previews</li><li>Pioneer badge in-app</li></ul>
+      <div class="founding-card early">
+        <div class="fc-name">Early Access</div>
+        <div class="fc-sub">Next rollout phase</div>
+        <ul class="fc-perks">
+          <li>Reduced founding pricing</li>
+          <li>Early launch access</li>
+          <li>Beta feature previews</li>
+          <li>Early access badge</li>
+        </ul>
       </div>
-      <div class="tier-card">
-        <div class="t-icon">🌳</div><div class="t-name">Founding Family</div><div class="t-range">Signups #501 – #1000</div>
-        <ul class="t-perks"><li>Lifetime 15% off any plan</li><li>Early access at general launch</li><li>Founding Family badge</li></ul>
+      <div class="founding-card">
+        <div class="fc-name">General Launch</div>
+        <div class="fc-sub">Public rollout phase</div>
+        <ul class="fc-perks">
+          <li>Standard onboarding access</li>
+          <li>Public feature rollout access</li>
+        </ul>
       </div>
     </div>
   </section>
   </div>
 
-  <!-- TIMELINE -->
+  <!-- VISION -->
   <div class="wrap">
-  <section class="timeline-sec">
-    <div class="sec-lbl">The Roadmap</div>
-    <h2 class="sec-ttl">Where we're headed — and when.</h2>
-    <div class="steps">
-      <div class="step"><div class="step-n">1</div><h4>Private Pilot</h4><p>200–300 founding families shape the product and lock in founding tier discounts permanently.</p><span class="s-tag">Now → Month 8</span></div>
-      <div class="step"><div class="step-n">2</div><h4>Soft Launch</h4><p>Caregiver access, smart pantry, and advance workflows go live for 300+ users.</p><span class="s-tag">Month 9–11</span></div>
-      <div class="step"><div class="step-n">3</div><h4>Full Predictions Go Live</h4><p>Our Prediction Engine goes live, built on each family's private data. Email parsing, voice, and predictive planning activate.</p><span class="s-tag">Year 2+</span></div>
-    </div>
+  <section class="vision-sec">
+    <div class="sec-lbl">The platform</div>
+    <h2 class="sec-ttl">Built to <em>learn</em> your<br>family over time.</h2>
+    <p class="vision-body">The more MomDom is used, the more helpful and personalized it becomes.</p>
+    <p class="vision-body">As moms add information, routines, preferences, schedules, health details, household patterns, and day-to-day family life into the system, MomDom begins learning how each family actually functions.</p>
+    <p class="vision-body" style="margin-bottom:8px;">Over time, the platform is designed to provide increasingly intelligent support through features like:</p>
+    <ul class="vision-features">
+      <li>Predictive reminders</li>
+      <li>Household pattern recognition</li>
+      <li>Family scheduling optimization</li>
+      <li>Meal and grocery intelligence</li>
+      <li>Contextual health tracking</li>
+      <li>Cross-household coordination</li>
+      <li>Intelligent family support systems</li>
+    </ul>
+    <p class="vision-body"><strong>The goal is not simply storing information.</strong></p>
+    <p class="vision-body">It's creating a system that helps reduce the operational and mental load families carry every day by becoming more aware, connected, and supportive over time.</p>
+    <p class="vision-close">A platform built to grow alongside families &#8212; helping moms spend less time mentally managing everything alone and more time being present in the moments that matter most.</p>
   </section>
   </div>
 
@@ -449,13 +522,17 @@ tr:hover td{background:var(--off);}
   <div class="wrap">
   <section class="cta-bottom" id="waitlist">
     <div class="sec-lbl">Join the waitlist</div>
-    <h2>There’s so much to remember and <em>keep</em> track of.</h2>
-    <p class="hero-sub" style="text-align:center;margin:0 auto 32px;">It’s exhausting to do it on your own.<br> —  MomDom. helps you carry <em>less</em>.</p>
+    <h2>There's already <em>too much</em><br>to keep track of.</h2>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 12px;">Appointments. School information. Grocery lists. Symptoms. Tasks. Forms. Routines. Notes. Mental tabs. Daily life.</p>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 12px;">MomDom was built to help moms stop carrying all of it alone.</p>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 24px;">A place to organize family life, reduce mental overload, and keep the important things right where you need them &#8212; without trying to hold everything in your head at once.</p>
+    <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:var(--navy);margin-bottom:20px;">Set it down here.</p>
+    <p class="hero-sub" style="text-align:center;margin:0 auto 28px;">Join the waitlist for early access and be part of building a smarter, more supportive way to manage family life.</p>
     <form class="wl-form" style="justify-content:center;" onsubmit="handleSignup(event,'cta-msg','cta-email','cta-btn')">
       <input class="wl-input" id="cta-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
-      <button class="btn-cyan" id="cta-btn" type="submit">Reserve My Spot →</button>
+      <button class="btn-cyan" id="cta-btn" type="submit">Join Waitlist &#8594;</button>
     </form>
-    <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No spam. </strong> Just updates as MomDom. grows</p>
+    <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No spam.</strong> Just updates as MomDom. grows.</p>
     <div class="form-msg" id="cta-msg" style="max-width:420px;margin:12px auto 0;"></div>
   </section>
 
@@ -513,9 +590,9 @@ tr:hover td{background:var(--off);}
         <input type="text" id="f-search" placeholder="Search email…" style="min-width:180px;"/>
         <select id="f-tier">
           <option value="">All tiers</option>
-          <option value="trailblazer">🌱 Trailblazer</option>
-          <option value="pioneer">🌿 Pioneer</option>
-          <option value="founding">🌳 Founding</option>
+          <option value="founding">Founding Circle</option>
+          <option value="early">Early Access</option>
+          <option value="general">General Launch</option>
           <option value="community">Community</option>
         </select>
         <select id="f-status">
@@ -559,30 +636,24 @@ function showView(name) {
 
 /* ── Balloon data (from MVP docs) ────────────────────── */
 const BALLOONS = [
-  { id:'health',   icon:'🏥', color:'#fde8e0', name:'Health',          tag:'MVP 1',
-    desc:'Allergy profiles, EpiPen locations, medication schedules, sick day mode. Critical info surfaces exactly when needed.',
-    items:['Allergy profiles','EpiPen locations','Medication rules','Sick Day Mode','Health timeline'] },
-  { id:'kids',     icon:'👧', color:'#e0d7fb', name:'Kids',             tag:'MVP 1',
-    desc:'Child profiles with clothing sizes, shoe sizes, activity details, school info, and important notes per child.',
-    items:['Child profiles','Clothing sizes','Shoe sizes','Activity details','School info'] },
-  { id:'meals',    icon:'🍽️',  color:'#fef3c7', name:'Meals',            tag:'MVP 1',
-    desc:'Meal memory, family preferences, dietary needs, and meal-day awareness that feeds into morning planning.',
-    items:['Meal history','Family preferences','Dietary needs','Meal-day awareness','Recipe notes'] },
-  { id:'household',icon:'🏠', color:'#d1fae5', name:'Household',        tag:'MVP 1',
-    desc:'Home inventory, maintenance notes, and household details that stop you from holding it all in your head.',
-    items:['Closet inventory','Home maintenance','Household notes','Supply tracking','Service contacts'] },
-  { id:'momcare',  icon:'💜', color:'#fce7f3', name:'Mom Care',         tag:'MVP 1',
-    desc:'Capacity tracking, energy state, emotional check-ins. The app adjusts its suggestions based on how you actually feel today.',
-    items:['Capacity state','Energy level','Emotional log','Weekly reflection','Recognition moments'] },
-  { id:'planning', icon:'📅', color:'#d4f0f8', name:'Planning & Tasks', tag:'MVP 1',
-    desc:'Morning planning flow, capacity-aware day view, gentle checklists. Direction for the day without productivity pressure.',
-    items:['Morning planning','Live day screen','Gentle checklists','Calendar awareness','Priority focus'] },
-  { id:'homeschool',icon:'📚',color:'#fef9c3', name:'Homeschool',       tag:'Soft Launch',
-    desc:'Curriculum tracking and learning logs — intentionally held out of MVP 1 to keep scope clean.',
-    items:['Curriculum notes','Learning logs','Activity tracking','Progress records'] },
-  { id:'memory',   icon:'✨', color:'#e0f2fe', name:'Memory/Reflection', tag:'MVP 1',
-    desc:'Evening check-in, daily close loop, weekly reflection. MomDom remembers so you don\'t have to.',
-    items:['Evening check-in','Pattern learning','Portfolio view','Weekly recognition','Insight captures'] },
+  { id:'mentaltabs', icon:'🧠', color:'#B9A6E3', name:"Mom's Mental Tabs", tag:'MVP 1',
+    desc:'A place to set down the thoughts you do not want to keep carrying mentally.',
+    items:['Reminders','Notes','To-dos','Mental tabs','Things to not forget'] },
+  { id:'kids',       icon:'👧', color:'#9FD3B0', name:'Kids',               tag:'MVP 1',
+    desc:'A place for the details that make up everyday family life.',
+    items:['Clothing sizes','Activities','Routines','Schedules','Growth tracking'] },
+  { id:'health',     icon:'🏥', color:'#F2A7B5', name:'Health',             tag:'MVP 1',
+    desc:'For the things you never want to forget later.',
+    items:['Medications','Allergies','Appointments','Symptoms','Health records'] },
+  { id:'meals',      icon:'🍽️',  color:'#B9A6E3', name:'Meals',              tag:'MVP 1',
+    desc:'Because dinner should not start from scratch every night.',
+    items:['Meal tracking','Grocery needs','Family favorites','Food ideas','Meal history'] },
+  { id:'household',  icon:'🏠', color:'#9FD3B0', name:'Household',          tag:'MVP 1',
+    desc:'Helping the household run without everything living in mom\'s head.',
+    items:['Tasks','Reminders','Routines','Household notes','Daily moving pieces'] },
+  { id:'planning',   icon:'📅', color:'#F2A7B5', name:'Planning',           tag:'MVP 1',
+    desc:'Right there when you need it.',
+    items:['Appointments','School events','Activities','Schedules','Family logistics'] },
 ];
 
 
@@ -652,10 +723,10 @@ function closeBalloonModal() {
 
 /* ── Signup handler ──────────────────────────────────── */
 const tierLabels = {
-  trailblazer: '🌱 Trailblazer — 40% off for life',
-  pioneer:     '🌿 Pioneer — 25% off for life',
-  founding:    '🌳 Founding Family — 15% off for life',
-  community:   '🌐 Community member',
+  founding:    'Founding Circle — priority pilot access',
+  early:       'Early Access — early launch access',
+  general:     'General Launch — standard access',
+  community:   'Community member',
 };
 
 async function handleSignup(e, msgId, inputId, btnId) {
@@ -683,7 +754,6 @@ async function handleSignup(e, msgId, inputId, btnId) {
       msg.className = 'form-msg ok';
       msg.innerHTML = `🎉 You're in at <strong>#${data.position}</strong>! Your tier: <strong>${tierLabels[data.tier]}</strong>. Watch your inbox for pilot updates.`;
       e.target.reset();
-      loadProofStrip(); // refresh live numbers
     } else {
       throw new Error(data.error || 'Unknown error');
     }
@@ -692,21 +762,8 @@ async function handleSignup(e, msgId, inputId, btnId) {
     msg.textContent = err.message || 'Something went wrong. Please try again.';
   } finally {
     btn.disabled = false;
-    btn.textContent = btnId === 'hero-btn' ? 'Set it down here →' : 'Reserve My Spot →';
+    btn.textContent = btnId === 'hero-btn' ? 'Set it down here →' : 'Join Waitlist →';
   }
-}
-
-/* ── Proof strip (live) ──────────────────────────────── */
-async function loadProofStrip() {
-  try {
-    const res = await fetch('/api/public-stats');
-    if (!res.ok) return;
-    const d = await res.json();
-    if (d.total !== undefined) {
-      document.getElementById('proof-total').textContent = d.total;
-      document.getElementById('proof-trail').textContent = d.trailblazersRemaining;
-    }
-  } catch {}
 }
 
 /* ── Admin auth ──────────────────────────────────────── */
@@ -866,7 +923,7 @@ async function loadTable(page) {
 
 /* ── Helpers ─────────────────────────────────────────── */
 function cap(s){ return s ? s[0].toUpperCase() + s.slice(1) : ''; }
-function tierEmoji(t){ return {trailblazer:'🌱',pioneer:'🌿',founding:'🌳',community:'🌐'}[t]||''; }
+function tierEmoji(t){ return {founding:'&#127807;',early:'&#127807;',general:'&#127807;',community:'&#127757;'}[t]||''; }
 function fmtDate(d){
   if (!d) return '—';
   const dt = new Date(d);
@@ -875,7 +932,6 @@ function fmtDate(d){
 
 /* ── Init ─────────────────────────────────────────────── */
 renderBalloons();
-loadProofStrip();
 
 // Route /admin directly
 if (location.hash === '#admin' || location.pathname === '/admin') {

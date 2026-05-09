@@ -1,0 +1,24 @@
+🧠🎈 MomDom. — Brand Colors & Fonts Official Visual Identity Reference
+~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
+🎨 Core Brand Colors
+Primary Brand Color • MomDom Blue — #2EC4E6 Primary background color used across branding, app visuals, and key materials.
+Neutral Palette • Grey — #DCE4E9 • Dark Grey — #A4ACBC • Navy — #0B2A33 • White — #FFFFFF • Black — #000000
+Usage Guidance • Blue anchors the brand. • Neutrals support clarity and calm. • White space is intentional and should be preserved. • Avoid heavy or overly saturated color combinations.
+~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
+🎈 Signature Balloon Colors
+These colors are fi xed brand elements and should remain consistent.
+• Soft Lavender — #B9A6E3 • Gentle Sage — #9FD3B0 • Blush Rose — #F2A7B5
+Rules • Do not alter hue or saturation. • Maintain soft, airy feeling. • Use together as a set whenever possible.
+🔤 Brand Fonts
+Primary Display Font Playfair Display Used for: • Main headings • Feature titles • Brand-forward statements • Elegant emphasis moments
+Primary Supporting Font Inter Used for: • Body text • App interface copy • Supporting descriptions • Lists and functional information
+~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
+✍️
+Typography Guidelines
+Hierarchy • Main Heading → Playfair Display (larger size) • Section Headings → Playfair Display (medium size) • Body Copy → Inter (clean and readable)
+Style Direction • Calm, clean spacing • Clear readability over decoration • Minimal visual clutter • Elegant but grounded
+🌿 Visual Philosophy
+MomDom’s visual identity should feel:
+• Calm • Supportive Design choices should reduce visual noise and create • Airy emotional breathing room. • Organized • Warm
+📌 Quick Reference (Designer Snapshot)
+Primary Color: #2EC4E6 Accent Colors: Lavender • Sage • Blush Fonts: Playfair Display + Inter Style: Calm • Minimal • Gentle • Structured
