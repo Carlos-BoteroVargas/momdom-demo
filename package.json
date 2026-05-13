@@ -2,7 +2,7 @@
   "name": "momdom-demo",
   "version": "1.0.0",
   "type": "module",
-  "description": "MomDom Demo — Netlify + MongoDB Atlas",
+  "description": "MomDom waitlist demo — Netlify + MongoDB Atlas",
   "scripts": {
     "dev": "npx netlify dev"
   },
