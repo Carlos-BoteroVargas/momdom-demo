@@ -84,6 +84,13 @@ h1.hero-h em{font-style:italic;color:var(--cyan-d);}
 .form-msg{display:none;margin-top:12px;padding:12px 16px;border-radius:var(--rs);font-size:.87rem;font-weight:500;}
 .form-msg.ok{background:var(--cyan-l);color:var(--navy);display:block;}
 .form-msg.err{background:#fde8e0;color:#a04928;display:block;}
+.cta-confirm{display:none;flex-direction:column;align-items:center;gap:14px;padding:12px 0 4px;}
+.cta-confirm.visible{display:flex;}
+.cta-confirm-logo{width:72px;opacity:.92;}
+.cta-confirm-title{font-family:var(--fd);font-size:1.65rem;font-weight:700;color:var(--navy);text-align:center;letter-spacing:-.3px;line-height:1.2;}
+.cta-confirm-title em{color:var(--cyan-d);font-style:italic;}
+.cta-confirm-sub{font-size:.92rem;color:var(--muted);text-align:center;max-width:360px;line-height:1.65;margin:0;}
+.cta-confirm-badge{background:var(--cyan-l);color:var(--navy-m);border-radius:50px;padding:7px 22px;font-size:.78rem;font-weight:600;letter-spacing:.3px;}
 
 /* ══ PROOF ════════════════════════════════════════════════════ */
 .proof{background:var(--cyan);padding:20px 0;margin:0 0 80px;}
@@ -387,12 +394,11 @@ tr.row-selected td{background:#f0fafe;}
       <div class="eyebrow"><span class="dot"></span>Founding pilot opening soon</div>
       <h1 class="hero-h">Your brain doesn't need to carry <em>everything.</em></h1>
       <p class="hero-sub">MomDom is the mental load of motherhood — and a place to finally set it down, so you don't carry it alone.</p>
-      <form class="wl-form" onsubmit="handleSignup(event,'hero-msg','hero-email','hero-btn')">
+      <form class="wl-form" onsubmit="handleHeroScroll(event)">
         <input class="wl-input" id="hero-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
         <button class="btn-cyan" id="hero-btn" type="submit">Set it down here &#8594;</button>
       </form>
       <p class="wl-note"><strong>No spam.</strong> Just updates as MomDom. grows.</p>
-      <div class="form-msg" id="hero-msg"></div>
     </div>
     <div class="fu d2" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
       <img src="/logo-sm.png" alt="MomDom balloons" class="hero-balloon"/>
@@ -510,12 +516,21 @@ tr.row-selected td{background:#f0fafe;}
     <p class="hero-sub" style="text-align:center;margin:0 auto 16px;">Appointments. School information. Grocery lists. Symptoms. Tasks. Forms. Routines. Mental tabs. Daily life.</p>
     <p class="hero-sub" style="text-align:center;margin:0 auto 16px;">MomDom helps moms stop carrying all of it alone.</p>
     <p style="font-family:var(--fd);font-size:1.25rem;font-style:italic;color:var(--navy);margin-bottom:28px;">Set it down here.</p>
-    <form class="wl-form" style="justify-content:center;" onsubmit="handleSignup(event,'cta-msg','cta-email','cta-btn')">
-      <input class="wl-input" id="cta-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
-      <button class="btn-cyan" id="cta-btn" type="submit">Join Waitlist &#8594;</button>
-    </form>
-    <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No spam.</strong> Just updates as MomDom. grows.</p>
-    <div class="form-msg" id="cta-msg" style="max-width:420px;margin:12px auto 0;"></div>
+    <div id="cta-form-wrap">
+      <form class="wl-form" style="justify-content:center;" onsubmit="handleCtaSignup(event)">
+        <input class="wl-input" id="cta-name" type="text" placeholder="First Name (optional)" autocomplete="given-name" oninput="this.value=this.value.replace(/[^a-zA-ZÀ-ɏ\s'\-]/g,'')"/>
+        <input class="wl-input" id="cta-email" type="email" placeholder="your@email.com" required autocomplete="email"/>
+        <button class="btn-cyan" id="cta-btn" type="submit">Join Waitlist &#8594;</button>
+      </form>
+      <p class="wl-note" style="text-align:center;margin-top:10px;"><strong>No spam.</strong> Just updates as MomDom. grows.</p>
+      <div class="form-msg" id="cta-msg" style="max-width:420px;margin:12px auto 0;"></div>
+    </div>
+    <div class="cta-confirm" id="cta-confirm">
+      <img src="/logo-sm.png" alt="MomDom" class="cta-confirm-logo"/>
+      <div class="cta-confirm-title" id="cta-confirm-title"></div>
+      <p class="cta-confirm-sub" id="cta-confirm-sub"></p>
+      <span class="cta-confirm-badge" id="cta-confirm-badge"></span>
+    </div>
   </section>
 
   <footer>
@@ -700,11 +715,22 @@ const TIER_DISPLAY = {
   general_launch:  '🌳 General Launch',
 };
 
-async function handleSignup(e, msgId, inputId, btnId) {
+function handleHeroScroll(e) {
   e.preventDefault();
-  const email = document.getElementById(inputId).value.trim();
-  const btn   = document.getElementById(btnId);
-  const msg   = document.getElementById(msgId);
+  const email = document.getElementById('hero-email').value.trim();
+  document.getElementById('hero-email').value = '';
+  const ctaEmail = document.getElementById('cta-email');
+  if (ctaEmail && email) ctaEmail.value = email;
+  document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => { if (ctaEmail) ctaEmail.focus(); }, 600);
+}
+
+async function handleCtaSignup(e) {
+  e.preventDefault();
+  const email     = document.getElementById('cta-email').value.trim();
+  const firstName = document.getElementById('cta-name').value.trim();
+  const btn = document.getElementById('cta-btn');
+  const msg = document.getElementById('cta-msg');
 
   btn.disabled = true;
   btn.textContent = 'Saving…';
@@ -714,26 +740,34 @@ async function handleSignup(e, msgId, inputId, btnId) {
     const res = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, ...UTM }),
+      body: JSON.stringify({ email, firstName, ...UTM }),
     });
     const data = await res.json();
 
+    const title = document.getElementById('cta-confirm-title');
+    const sub   = document.getElementById('cta-confirm-sub');
+    const badge = document.getElementById('cta-confirm-badge');
+    const name  = firstName ? `, ${firstName}` : '';
+
     if (data.duplicate) {
-      msg.className = 'form-msg ok';
-      msg.textContent = `You're already on the list at #${data.position}! (${tierLabels[data.tier]})`;
+      title.innerHTML = `You're already in${name}! 💛`;
+      sub.textContent = `We already have your spot saved. We'll be in touch as MomDom. grows.`;
+      badge.textContent = `#${data.position} · ${TIER_DISPLAY[data.tier] || data.tier}`;
     } else if (data.success) {
-      msg.className = 'form-msg ok';
-      msg.innerHTML = `🎉 You're in at <strong>#${data.position}</strong>! Your tier: <strong>${tierLabels[data.tier]}</strong>. Watch your inbox for pilot updates.`;
-      e.target.reset();
+      title.innerHTML = `You're in${name}! 🎉`;
+      sub.textContent = `Your spot as a founding member is saved. Watch your inbox for pilot updates.`;
+      badge.textContent = `#${data.position} · ${TIER_DISPLAY[data.tier] || data.tier}`;
     } else {
       throw new Error(data.error || 'Unknown error');
     }
+
+    document.getElementById('cta-form-wrap').style.display = 'none';
+    document.getElementById('cta-confirm').classList.add('visible');
   } catch(err) {
     msg.className = 'form-msg err';
     msg.textContent = err.message || 'Something went wrong. Please try again.';
-  } finally {
     btn.disabled = false;
-    btn.textContent = btnId === 'hero-btn' ? 'Set it down here →' : 'Join Waitlist →';
+    btn.textContent = 'Join Waitlist →';
   }
 }
 
@@ -893,10 +927,10 @@ async function loadTable(page) {
           <th></th>
         </tr></thead>
         <tbody>
-          ${d.rows.map(r => `
+          ${d.rows.map((r, i) => `
             <tr id="row-${r.position}">
               <td><input type="checkbox" class="row-chk" value="${r.email}" onchange="toggleRowSelect(this)"/></td>
-              <td style="color:var(--muted);font-weight:600;">${r.position}</td>
+              <td style="color:var(--muted);font-weight:600;">${(page - 1) * d.pageSize + i + 1}</td>
               <td style="color:var(--muted);font-size:.82rem;">${r.firstName || '—'}</td>
               <td><a class="email-link" href="https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(r.email)}" target="_blank">${r.email} ↗</a></td>
               <td><span class="tier-badge tb-${r.tier.replace(/[^a-z_]/g,'')}">${tierEmoji(r.tier)} ${cap(r.tier.replace(/_/g,' '))}</span></td>
