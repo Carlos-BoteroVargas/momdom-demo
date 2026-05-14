@@ -899,7 +899,7 @@ async function loadTable(page) {
               <td style="color:var(--muted);font-weight:600;">${r.position}</td>
               <td style="color:var(--muted);font-size:.82rem;">${r.firstName || '—'}</td>
               <td><a class="email-link" href="https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(r.email)}" target="_blank">${r.email} ↗</a></td>
-              <td><span class="tier-badge tb-${r.tier}">${tierEmoji(r.tier)} ${cap(r.tier.replace(/_/g,' '))}</span></td>
+              <td><span class="tier-badge tb-${r.tier.replace(/[^a-z_]/g,'')}">${tierEmoji(r.tier)} ${cap(r.tier.replace(/_/g,' '))}</span></td>
               <td><select class="status-sel" data-email="${r.email}" onchange="updateStatus(this)">
                 <option value="pending"  ${r.status==='pending'  ?'selected':''}>Pending</option>
                 <option value="notified" ${r.status==='notified' ?'selected':''}>Notified</option>
@@ -907,7 +907,7 @@ async function loadTable(page) {
               </select></td>
               <td style="color:var(--muted);font-size:.75rem;">${r.utm_source || 'direct'}</td>
               <td style="color:var(--muted);font-size:.75rem;">${fmtDate(r.createdAt)}</td>
-              <td><button class="del-btn" title="Delete" onclick="deleteSignup('${r.email}', this)">🗑</button></td>
+              <td><button class="del-btn" title="Delete" data-email="${r.email}" onclick="deleteSignup(this.dataset.email, this)">🗑</button></td>
             </tr>
           `).join('')}
         </tbody>
