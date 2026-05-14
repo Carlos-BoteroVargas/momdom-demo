@@ -847,9 +847,13 @@ async function saveActiveTier() {
 }
 
 let _currentPage = 1;
+let _selectedEmails = new Set();
 
 async function loadTable(page) {
   _currentPage = page;
+  _selectedEmails.clear();
+  updateBulkBar();
+
   const wrap = document.getElementById('tbl-wrap');
   const pag  = document.getElementById('pagination');
   wrap.innerHTML = `<div class="loading"><span class="spinner"></span>Loading signups…</div>`;
@@ -860,8 +864,7 @@ async function loadTable(page) {
   const status = document.getElementById('f-status')?.value || '';
 
   const params = new URLSearchParams({
-    password: _adminPw,
-    page,
+    password: _adminPw, page,
     ...(search && { search }),
     ...(tier   && { tier }),
     ...(status && { status }),
@@ -878,32 +881,39 @@ async function loadTable(page) {
 
     wrap.innerHTML = `
       <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Email</th>
-            <th>Tier</th>
-            <th>Status</th>
-            <th>Source</th>
-            <th>Joined</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th style="width:32px;"><input type="checkbox" id="chk-all" onchange="toggleSelectAll(this)"/></th>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Tier</th>
+          <th>Status</th>
+          <th>Source</th>
+          <th>Joined</th>
+          <th></th>
+        </tr></thead>
         <tbody>
           ${d.rows.map(r => `
-            <tr>
+            <tr id="row-${r.position}">
+              <td><input type="checkbox" class="row-chk" value="${r.email}" onchange="toggleRowSelect(this)"/></td>
               <td style="color:var(--muted);font-weight:600;">${r.position}</td>
-              <td>${r.email}</td>
-              <td><span class="tier-badge tb-${r.tier}">${tierEmoji(r.tier)} ${cap(r.tier)}</span></td>
-              <td><span class="s-pill s-${r.status}">${cap(r.status)}</span></td>
+              <td style="color:var(--muted);font-size:.82rem;">${r.firstName || '—'}</td>
+              <td><a class="email-link" href="https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(r.email)}" target="_blank">${r.email} ↗</a></td>
+              <td><span class="tier-badge tb-${r.tier}">${tierEmoji(r.tier)} ${cap(r.tier.replace(/_/g,' '))}</span></td>
+              <td><select class="status-sel" data-email="${r.email}" onchange="updateStatus(this)">
+                <option value="pending"  ${r.status==='pending'  ?'selected':''}>Pending</option>
+                <option value="notified" ${r.status==='notified' ?'selected':''}>Notified</option>
+                <option value="active"   ${r.status==='active'   ?'selected':''}>Active</option>
+              </select></td>
               <td style="color:var(--muted);font-size:.75rem;">${r.utm_source || 'direct'}</td>
               <td style="color:var(--muted);font-size:.75rem;">${fmtDate(r.createdAt)}</td>
+              <td><button class="del-btn" title="Delete" onclick="deleteSignup('${r.email}', this)">🗑</button></td>
             </tr>
           `).join('')}
         </tbody>
       </table>
     `;
 
-    // Pagination
     const totalPages = Math.ceil(d.total / d.pageSize);
     if (totalPages > 1) {
       pag.innerHTML = `
@@ -912,10 +922,117 @@ async function loadTable(page) {
         <button class="pag-btn" onclick="loadTable(${page+1})" ${page>=totalPages?'disabled':''}>Next →</button>
       `;
     }
-
   } catch(err) {
     wrap.innerHTML = `<div class="form-msg err" style="display:block;margin:16px;">Failed to load data.</div>`;
   }
+}
+
+/* ── Status update ──────────────────────────── */
+async function updateStatus(sel) {
+  const email  = sel.dataset.email;
+  const status = sel.value;
+  sel.disabled = true;
+  try {
+    await fetch('/api/update-signup?password=' + encodeURIComponent(_adminPw), {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, status }),
+    });
+  } catch { alert('Failed to save status for ' + email); }
+  finally { sel.disabled = false; }
+}
+
+/* ── Delete ─────────────────────────────────── */
+async function deleteSignup(email, btn) {
+  if (!confirm(`Remove ${email} from the waitlist?`)) return;
+  btn.disabled = true;
+  try {
+    const res = await fetch('/api/delete-signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: _adminPw, email }),
+    });
+    const d = await res.json();
+    if (d.deleted) {
+      document.querySelectorAll('.row-chk').forEach(c => {
+        if (c.value === email) c.closest('tr').remove();
+      });
+      _selectedEmails.delete(email);
+      updateBulkBar();
+    }
+  } catch { alert('Failed to delete ' + email); btn.disabled = false; }
+}
+
+/* ── Checkbox selection ─────────────────────── */
+function toggleRowSelect(chk) {
+  if (chk.checked) _selectedEmails.add(chk.value);
+  else _selectedEmails.delete(chk.value);
+  chk.closest('tr').classList.toggle('row-selected', chk.checked);
+  updateBulkBar();
+}
+
+function toggleSelectAll(chk) {
+  document.querySelectorAll('.row-chk').forEach(c => {
+    c.checked = chk.checked;
+    if (chk.checked) _selectedEmails.add(c.value);
+    else _selectedEmails.delete(c.value);
+    c.closest('tr').classList.toggle('row-selected', chk.checked);
+  });
+  updateBulkBar();
+}
+
+function clearSelection() {
+  _selectedEmails.clear();
+  document.querySelectorAll('.row-chk').forEach(c => {
+    c.checked = false;
+    c.closest('tr').classList.remove('row-selected');
+  });
+  const all = document.getElementById('chk-all');
+  if (all) all.checked = false;
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulk-bar');
+  const cnt = document.getElementById('bulk-count');
+  if (!bar) return;
+  bar.classList.toggle('visible', _selectedEmails.size > 0);
+  if (cnt) cnt.textContent = `${_selectedEmails.size} selected`;
+}
+
+/* ── Bulk status update ─────────────────────── */
+async function applyBulkStatus() {
+  const emails = [..._selectedEmails];
+  const status = document.getElementById('bulk-status').value;
+  if (!emails.length) return;
+  try {
+    await fetch('/api/bulk-update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: _adminPw, emails, status }),
+    });
+    await loadTable(_currentPage);
+  } catch { alert('Bulk update failed.'); }
+}
+
+/* ── Email everyone ─────────────────────────── */
+async function emailEveryone() {
+  const tier   = document.getElementById('f-tier')?.value   || '';
+  const status = document.getElementById('f-status')?.value || '';
+  const params = new URLSearchParams({
+    password: _adminPw,
+    ...(tier   && { tier }),
+    ...(status && { status }),
+  });
+  try {
+    const res = await fetch('/api/emails?' + params);
+    const d = await res.json();
+    if (!d.emails?.length) { alert('No emails match the current filter.'); return; }
+    window.open(
+      'https://mail.google.com/mail/?view=cm&bcc=' + encodeURIComponent(d.emails.join(',')),
+      '_blank'
+    );
+  } catch { alert('Failed to fetch email list.'); }
 }
 
 /* ── Helpers ─────────────────────────────────────────── */
