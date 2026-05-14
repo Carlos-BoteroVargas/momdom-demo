@@ -1,6 +1,4 @@
 // netlify/functions/stats.js
-// GET /api/stats?password=XXX
-
 import { getDb } from "./_db.js";
 
 function cors(body, status = 200) {
@@ -20,9 +18,7 @@ export const handler = async (event) => {
 
   const params = event.queryStringParameters || {};
   const adminPassword = process.env.ADMIN_PASSWORD || "momdom2026";
-  if (params.password !== adminPassword) {
-    return cors({ error: "Unauthorized" }, 401);
-  }
+  if (params.password !== adminPassword) return cors({ error: "Unauthorized" }, 401);
 
   try {
     const db = await getDb();
@@ -30,54 +26,41 @@ export const handler = async (event) => {
 
     const [
       total,
-      trailblazers,
-      pioneers,
-      founding,
+      foundingCircle,
+      earlyAccess,
+      generalLaunch,
       pending,
-      invited,
-      onboarded,
+      notified,
+      active,
       bySource,
       recentSignups,
     ] = await Promise.all([
       col.countDocuments(),
-      col.countDocuments({ tier: "trailblazer" }),
-      col.countDocuments({ tier: "pioneer" }),
-      col.countDocuments({ tier: "founding" }),
+      col.countDocuments({ tier: "founding_circle" }),
+      col.countDocuments({ tier: "early_access" }),
+      col.countDocuments({ tier: "general_launch" }),
       col.countDocuments({ status: "pending" }),
-      col.countDocuments({ status: "invited" }),
-      col.countDocuments({ status: "onboarded" }),
+      col.countDocuments({ status: "notified" }),
+      col.countDocuments({ status: "active" }),
       col.aggregate([
         { $group: { _id: "$utm_source", count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 5 },
       ]).toArray(),
-      // Last 7 days signups per day
       col.aggregate([
-        {
-          $match: {
-            createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
-          },
-        },
-        {
-          $group: {
-            _id: {
-              $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-            },
-            count: { $sum: 1 },
-          },
-        },
+        { $match: { createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } } },
+        { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } }, count: { $sum: 1 } } },
         { $sort: { _id: 1 } },
       ]).toArray(),
     ]);
 
     return cors({
       total,
-      tiers: { trailblazers, pioneers, founding },
-      trailblazersRemaining: Math.max(0, 100 - trailblazers),
-      pioneersRemaining: Math.max(0, 500 - trailblazers - pioneers),
-      statuses: { pending, invited, onboarded },
-      bySource: bySource.map((s) => ({ source: s._id || "direct", count: s.count })),
-      recentSignups: recentSignups.map((d) => ({ date: d._id, count: d.count })),
+      tiers: { founding_circle: foundingCircle, early_access: earlyAccess, general_launch: generalLaunch },
+      foundingCircleRemaining: Math.max(0, 50 - foundingCircle),
+      statuses: { pending, notified, active },
+      bySource: bySource.map(s => ({ source: s._id || "direct", count: s.count })),
+      recentSignups: recentSignups.map(d => ({ date: d._id, count: d.count })),
     });
   } catch (err) {
     console.error("stats error:", err);
