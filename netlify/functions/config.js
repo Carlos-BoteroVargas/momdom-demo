@@ -22,9 +22,14 @@ export const handler = async (event) => {
   if (event.httpMethod === "GET") {
     const params = event.queryStringParameters || {};
     if (params.password !== adminPassword) return cors({ error: "Unauthorized" }, 401);
-    const db = await getDb();
-    const doc = await db.collection("config").findOne({ key: "activeTier" });
-    return cors({ activeTier: doc?.value ?? "founding_circle" });
+    try {
+      const db = await getDb();
+      const doc = await db.collection("config").findOne({ key: "activeTier" });
+      return cors({ activeTier: doc?.value ?? "founding_circle" });
+    } catch (err) {
+      console.error("config GET error:", err);
+      return cors({ error: "Database error" }, 500);
+    }
   }
 
   if (event.httpMethod === "POST") {
@@ -32,13 +37,18 @@ export const handler = async (event) => {
     try { body = JSON.parse(event.body || "{}"); } catch { return cors({ error: "Invalid JSON" }, 400); }
     if (body.password !== adminPassword) return cors({ error: "Unauthorized" }, 401);
     if (!VALID_TIERS.includes(body.activeTier)) return cors({ error: "Invalid tier" }, 400);
-    const db = await getDb();
-    await db.collection("config").updateOne(
-      { key: "activeTier" },
-      { $set: { key: "activeTier", value: body.activeTier } },
-      { upsert: true }
-    );
-    return cors({ activeTier: body.activeTier });
+    try {
+      const db = await getDb();
+      await db.collection("config").updateOne(
+        { key: "activeTier" },
+        { $set: { key: "activeTier", value: body.activeTier } },
+        { upsert: true }
+      );
+      return cors({ activeTier: body.activeTier });
+    } catch (err) {
+      console.error("config POST error:", err);
+      return cors({ error: "Database error" }, 500);
+    }
   }
 
   return cors({ error: "Method not allowed" }, 405);
