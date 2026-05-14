@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const client = new MongoClient(uri);
 
 function parseCsv(text) {
-  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+  const lines = text.replace(/^﻿/, "").split(/\r?\n/).map(l => l.trim()).filter(Boolean);
   const header = lines[0].toLowerCase().split(",").map(h => h.trim());
   const nameIdx  = header.indexOf("firstname");
   const emailIdx = header.indexOf("email");
@@ -20,10 +20,12 @@ function parseCsv(text) {
     // Handle quoted fields (e.g. "Smith, Jane")
     const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g)?.map(c => c.replace(/^"|"$/g, "").trim()) ?? line.split(",").map(c => c.trim());
     const rawDate = dateIdx !== -1 ? cols[dateIdx] : null;
+    const parsedDate = rawDate ? new Date(rawDate) : null;
+    const createdAt = parsedDate && !isNaN(parsedDate.getTime()) ? parsedDate : new Date("2026-02-01");
     return {
       firstName: nameIdx !== -1 ? cols[nameIdx] || null : null,
       email: (cols[emailIdx] || "").toLowerCase(),
-      createdAt: rawDate ? new Date(rawDate) : new Date("2026-02-01"),
+      createdAt,
     };
   }).filter(r => r.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(r.email));
 }
