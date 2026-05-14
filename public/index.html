@@ -689,10 +689,15 @@ function renderBalloons() {
 
 /* ── Signup handler ──────────────────────────────────── */
 const tierLabels = {
-  founding:    'Founding Circle — priority pilot access',
-  early:       'Early Access — early launch access',
-  general:     'General Launch — standard access',
-  community:   'Community member',
+  founding_circle: 'Founding Circle — priority pilot access',
+  early_access:    'Early Access — early launch access',
+  general_launch:  'General Launch — standard access',
+};
+
+const TIER_DISPLAY = {
+  founding_circle: '🌱 Founding Circle',
+  early_access:    '🌿 Early Access',
+  general_launch:  '🌳 General Launch',
 };
 
 async function handleSignup(e, msgId, inputId, btnId) {
@@ -762,7 +767,7 @@ function adminLogin() {
 
 /* ── Dashboard loader ────────────────────────────────── */
 async function loadDashboard() {
-  await Promise.all([loadStats(), loadTable(1)]);
+  await Promise.all([loadStats(), loadTable(1), loadConfig()]);
 }
 
 async function loadStats() {
@@ -775,30 +780,28 @@ async function loadStats() {
     const res = await fetch('/api/stats?password=' + encodeURIComponent(_adminPw));
     const d = await res.json();
 
-    // KPIs
     kpiRow.innerHTML = `
       <div class="kpi"><div class="kpi-v">${d.total}</div><div class="kpi-l">Total Signups</div><div class="kpi-c kpi-up">↑ ${d.recentSignups?.slice(-1)[0]?.count || 0} today</div></div>
-      <div class="kpi"><div class="kpi-v">${d.trailblazersRemaining}</div><div class="kpi-l">Trailblazer spots left</div><div class="kpi-c kpi-dn">${d.tiers.trailblazers} claimed</div></div>
-      <div class="kpi"><div class="kpi-v">${d.statuses.invited}</div><div class="kpi-l">Pilot invites sent</div><div class="kpi-c kpi-nt">${d.statuses.onboarded} onboarded</div></div>
+      <div class="kpi"><div class="kpi-v">${d.foundingCircleRemaining}</div><div class="kpi-l">Founding Circle spots left</div><div class="kpi-c kpi-dn">${d.tiers.founding_circle} of 50 claimed</div></div>
+      <div class="kpi"><div class="kpi-v">${d.statuses.notified}</div><div class="kpi-l">Notified</div><div class="kpi-c kpi-nt">${d.statuses.active} active</div></div>
       <div class="kpi"><div class="kpi-v">${d.bySource?.find(s=>s.source==='direct')?.count || 0}</div><div class="kpi-l">Direct (organic)</div><div class="kpi-c kpi-up">↑ $0 CAC</div></div>
     `;
 
-    // Tier bars
-    const maxT = Math.max(d.tiers.trailblazers, d.tiers.pioneers, d.tiers.founding, 1);
+    const fc = d.tiers.founding_circle, ea = d.tiers.early_access, gl = d.tiers.general_launch;
     chartRow.innerHTML = `
       <div class="tier-bars">
         <h4>Tier Distribution</h4>
         <div class="t-bar-row">
-          <div class="t-bar-label"><span>🌱 Trailblazer</span><span>${d.tiers.trailblazers} / 100</span></div>
-          <div class="t-bar-track"><div class="t-bar-fill" style="width:${Math.min(100,d.tiers.trailblazers)}%"></div></div>
+          <div class="t-bar-label"><span>🌱 Founding Circle</span><span>${fc} / 50</span></div>
+          <div class="t-bar-track"><div class="t-bar-fill" style="width:${Math.min(100, fc * 2)}%"></div></div>
         </div>
         <div class="t-bar-row">
-          <div class="t-bar-label"><span>🌿 Pioneer</span><span>${d.tiers.pioneers} / 400</span></div>
-          <div class="t-bar-track"><div class="t-bar-fill p" style="width:${Math.min(100,d.tiers.pioneers/4)}%"></div></div>
+          <div class="t-bar-label"><span>🌿 Early Access</span><span>${ea}</span></div>
+          <div class="t-bar-track"><div class="t-bar-fill ea" style="width:${Math.min(100, ea)}%"></div></div>
         </div>
         <div class="t-bar-row">
-          <div class="t-bar-label"><span>🌳 Founding</span><span>${d.tiers.founding} / 500</span></div>
-          <div class="t-bar-track"><div class="t-bar-fill f" style="width:${Math.min(100,d.tiers.founding/5)}%"></div></div>
+          <div class="t-bar-label"><span>🌳 General Launch</span><span>${gl}</span></div>
+          <div class="t-bar-track"><div class="t-bar-fill gl" style="width:${Math.min(100, gl)}%"></div></div>
         </div>
       </div>
       <div class="src-chart">
@@ -813,6 +816,34 @@ async function loadStats() {
   } catch(err) {
     kpiRow.innerHTML = `<div class="form-msg err" style="display:block;">Failed to load stats.</div>`;
   }
+}
+
+/* ── Active tier config ─────────────────────────────────── */
+async function loadConfig() {
+  try {
+    const res = await fetch('/api/config?password=' + encodeURIComponent(_adminPw));
+    const d = await res.json();
+    document.getElementById('atc-value').textContent = TIER_DISPLAY[d.activeTier] || d.activeTier;
+    document.getElementById('atc-select').value = d.activeTier;
+  } catch { /* non-critical */ }
+}
+
+function toggleTierEdit() {
+  document.getElementById('atc-edit').classList.toggle('open');
+}
+
+async function saveActiveTier() {
+  const tier = document.getElementById('atc-select').value;
+  try {
+    const res = await fetch('/api/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: _adminPw, activeTier: tier }),
+    });
+    const d = await res.json();
+    document.getElementById('atc-value').textContent = TIER_DISPLAY[d.activeTier] || d.activeTier;
+    document.getElementById('atc-edit').classList.remove('open');
+  } catch { alert('Failed to save tier.'); }
 }
 
 let _currentPage = 1;
@@ -889,7 +920,7 @@ async function loadTable(page) {
 
 /* ── Helpers ─────────────────────────────────────────── */
 function cap(s){ return s ? s[0].toUpperCase() + s.slice(1) : ''; }
-function tierEmoji(t){ return {founding:'&#127807;',early:'&#127807;',general:'&#127807;',community:'&#127757;'}[t]||''; }
+function tierEmoji(t){ return {founding_circle:'🌱',early_access:'🌿',general_launch:'🌳'}[t]||''; }
 function fmtDate(d){
   if (!d) return '—';
   const dt = new Date(d);
