@@ -23,7 +23,8 @@ export const handler = async (event) => {
   const params = event.queryStringParameters || {};
 
   // Password check
-  const adminPassword = process.env.ADMIN_PASSWORD || "momdom2026";
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) return cors({ error: "Server misconfiguration" }, 500);
   if (params.password !== adminPassword) {
     return cors({ error: "Unauthorized" }, 401);
   }

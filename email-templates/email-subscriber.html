@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MomDom — You're on the list!</title>
+  <!--
+    PREVIEW NOTE FOR LESLEY:
+    Variables that will be injected by the Netlify function at send time:
+      {{firstName}}   → subscriber's first name (falls back to "Friend")
+      {{position}}    → waitlist number, e.g. 32
+      {{tier}}        → "Founding Circle"
+  -->
+</head>
+<body style="margin:0;padding:0;background-color:#f0f9fc;font-family:'Georgia',serif;">
+
+  <!-- Preheader (hidden preview text in inbox) -->
+  <div style="display:none;max-height:0;overflow:hidden;color:#f0f9fc;">
+    You're #{{position}} on the MomDom waitlist — welcome to the Founding Circle. ✨
+  </div>
+
+  <!-- Outer wrapper -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background-color:#f0f9fc;padding:40px 16px;">
+    <tr>
+      <td align="center">
+
+        <!-- Card -->
+        <table width="600" cellpadding="0" cellspacing="0" border="0"
+               style="max-width:600px;width:100%;background-color:#ffffff;
+                      border-radius:20px;overflow:hidden;
+                      box-shadow:0 4px 32px rgba(46,196,230,0.10);">
+
+          <!-- Header band -->
+          <tr>
+            <td style="background-color:#2EC4E6;padding:36px 48px 28px;text-align:center;">
+              <!-- Wordmark -->
+              <div style="font-family:'Georgia',serif;font-size:34px;
+                          color:#ffffff;letter-spacing:-1px;line-height:1;">
+                Mom<span style="color:#d4f5fc;font-style:italic;">Dom</span>
+              </div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.75);
+                          letter-spacing:3px;text-transform:uppercase;
+                          margin-top:6px;">
+                Household Operating System
+              </div>
+            </td>
+          </tr>
+
+          <!-- Balloon accent bar -->
+          <tr>
+            <td style="background:linear-gradient(90deg,#2EC4E6 0%,#B8A4D8 50%,#F2A7C3 100%);
+                       height:4px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:48px 48px 32px;">
+
+              <!-- Greeting -->
+              <p style="margin:0 0 8px;font-size:13px;color:#2EC4E6;
+                         letter-spacing:2px;text-transform:uppercase;
+                         font-family:Arial,sans-serif;">
+                Welcome, {{firstName}} 👋
+              </p>
+              <h1 style="margin:0 0 24px;font-size:30px;color:#1a3a42;
+                          line-height:1.2;font-weight:normal;">
+                You're officially<br/>
+                <span style="color:#2EC4E6;font-style:italic;">on the list.</span>
+              </h1>
+
+              <p style="margin:0 0 28px;font-size:16px;color:#4a6572;
+                         line-height:1.7;font-family:Arial,sans-serif;">
+                MomDom is being built for caregivers who carry everything in their heads —
+                and deserve a system that carries it with them. You're one of the first
+                to say yes to that idea.
+              </p>
+
+              <!-- Position badge -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="margin:0 0 32px;width:100%;">
+                <tr>
+                  <td style="background:linear-gradient(135deg,#eaf9fd 0%,#f3eeff 100%);
+                              border-radius:14px;padding:24px 28px;
+                              border-left:4px solid #2EC4E6;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td>
+                          <div style="font-size:11px;color:#2EC4E6;letter-spacing:2px;
+                                      text-transform:uppercase;font-family:Arial,sans-serif;
+                                      margin-bottom:4px;">Your spot</div>
+                          <div style="font-size:42px;color:#1a3a42;font-family:'Georgia',serif;
+                                      font-weight:normal;line-height:1;">
+                            #{{position}}
+                          </div>
+                        </td>
+                        <td align="right" valign="middle">
+                          <div style="background-color:#2EC4E6;color:#ffffff;
+                                      font-size:11px;letter-spacing:1.5px;
+                                      text-transform:uppercase;font-family:Arial,sans-serif;
+                                      padding:8px 16px;border-radius:20px;
+                                      white-space:nowrap;">
+                            🌱 Founding Circle
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- What's next -->
+              <p style="margin:0 0 12px;font-size:12px;color:#2EC4E6;
+                         letter-spacing:2px;text-transform:uppercase;
+                         font-family:Arial,sans-serif;">
+                What happens next
+              </p>
+
+              <!-- Steps -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="margin:0 0 36px;width:100%;">
+                <tr>
+                  <td style="padding:0 0 16px;">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td valign="top" style="padding-right:14px;">
+                          <div style="width:28px;height:28px;border-radius:50%;
+                                      background-color:#2EC4E6;color:#fff;
+                                      font-size:12px;font-family:Arial,sans-serif;
+                                      text-align:center;line-height:28px;">1</div>
+                        </td>
+                        <td valign="top">
+                          <p style="margin:4px 0 0;font-size:14px;color:#4a6572;
+                                     line-height:1.6;font-family:Arial,sans-serif;">
+                            <strong style="color:#1a3a42;">We build.</strong>
+                            The MomDom team is heads-down on the pilot. You'll hear from us
+                            when early access opens.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0 0 16px;">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td valign="top" style="padding-right:14px;">
+                          <div style="width:28px;height:28px;border-radius:50%;
+                                      background-color:#B8A4D8;color:#fff;
+                                      font-size:12px;font-family:Arial,sans-serif;
+                                      text-align:center;line-height:28px;">2</div>
+                        </td>
+                        <td valign="top">
+                          <p style="margin:4px 0 0;font-size:14px;color:#4a6572;
+                                     line-height:1.6;font-family:Arial,sans-serif;">
+                            <strong style="color:#1a3a42;">You get in first.</strong>
+                            Founding Circle members get priority access, input on features,
+                            and founding pricing — locked for life.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td valign="top" style="padding-right:14px;">
+                          <div style="width:28px;height:28px;border-radius:50%;
+                                      background-color:#F2A7C3;color:#fff;
+                                      font-size:12px;font-family:Arial,sans-serif;
+                                      text-align:center;line-height:28px;">3</div>
+                        </td>
+                        <td valign="top">
+                          <p style="margin:4px 0 0;font-size:14px;color:#4a6572;
+                                     line-height:1.6;font-family:Arial,sans-serif;">
+                            <strong style="color:#1a3a42;">Stay close.</strong>
+                            Watch your inbox. We'll reach out with updates, sneak peeks,
+                            and the moment your invite is ready.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Closing note -->
+              <p style="margin:0 0 4px;font-size:15px;color:#4a6572;
+                         line-height:1.7;font-family:Arial,sans-serif;">
+                Thank you for believing in this before it exists.
+              </p>
+              <p style="margin:0;font-size:15px;color:#4a6572;
+                         line-height:1.7;font-family:Arial,sans-serif;">
+                — Lesley &amp; the MomDom team
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color:#f8feff;border-top:1px solid #e8f7fb;
+                        padding:24px 48px;text-align:center;">
+              <p style="margin:0 0 6px;font-size:11px;color:#9bbec8;
+                         font-family:Arial,sans-serif;letter-spacing:0.5px;">
+                You're receiving this because you signed up at
+                <a href="https://momdom.app" style="color:#2EC4E6;text-decoration:none;">
+                  momdom.app
+                </a>
+              </p>
+              <p style="margin:0;font-size:11px;color:#9bbec8;font-family:Arial,sans-serif;">
+                MomDom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Card -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

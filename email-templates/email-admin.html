@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MomDom Admin — New Signup</title>
+  <!--
+    PREVIEW NOTE FOR LESLEY:
+    Variables injected by the Netlify function at send time:
+      {{position}}    → waitlist position number, e.g. 32
+      {{email}}       → subscriber's email address
+      {{firstName}}   → first name if provided, otherwise "—"
+      {{tier}}        → "founding_circle" → displayed as "Founding Circle"
+      {{utmSource}}   → acquisition source, e.g. "direct", "instagram"
+      {{timestamp}}   → date/time of signup, e.g. "May 14, 2026 at 5:51 AM"
+  -->
+</head>
+<body style="margin:0;padding:0;background-color:#0f2027;font-family:Arial,sans-serif;">
+
+  <!-- Outer wrapper -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background-color:#0f2027;padding:40px 16px;">
+    <tr>
+      <td align="center">
+
+        <!-- Card -->
+        <table width="560" cellpadding="0" cellspacing="0" border="0"
+               style="max-width:560px;width:100%;background-color:#162730;
+                      border-radius:16px;overflow:hidden;
+                      border:1px solid #1e3a45;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 36px 24px;border-bottom:1px solid #1e3a45;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td valign="middle">
+                    <div style="font-size:11px;color:#2EC4E6;letter-spacing:3px;
+                                text-transform:uppercase;margin-bottom:4px;">
+                      MomDom Admin
+                    </div>
+                    <div style="font-size:22px;color:#ffffff;font-weight:normal;
+                                font-family:'Georgia',serif;">
+                      New waitlist signup
+                    </div>
+                  </td>
+                  <td align="right" valign="middle">
+                    <!-- Pulse dot indicator -->
+                    <div style="width:10px;height:10px;border-radius:50%;
+                                background-color:#2EC4E6;display:inline-block;"></div>
+                    <span style="font-size:11px;color:#2EC4E6;
+                                  letter-spacing:1px;margin-left:6px;
+                                  text-transform:uppercase;">Live</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Position highlight -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;background:linear-gradient(135deg,#1a3a45 0%,#162035 100%);
+                            border-radius:12px;overflow:hidden;
+                            border:1px solid #2EC4E620;">
+                <tr>
+                  <td style="padding:20px 24px;">
+                    <div style="font-size:11px;color:#2EC4E6;letter-spacing:2px;
+                                text-transform:uppercase;margin-bottom:6px;">
+                      Position claimed
+                    </div>
+                    <div style="font-size:52px;color:#2EC4E6;line-height:1;
+                                font-family:'Georgia',serif;font-weight:normal;">
+                      #{{position}}
+                    </div>
+                  </td>
+                  <td align="right" style="padding:20px 24px;" valign="middle">
+                    <div style="background-color:#2EC4E615;border:1px solid #2EC4E640;
+                                border-radius:20px;padding:8px 16px;
+                                font-size:11px;color:#2EC4E6;
+                                letter-spacing:1.5px;text-transform:uppercase;
+                                white-space:nowrap;">
+                      🌱 Founding Circle
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Data rows -->
+          <tr>
+            <td style="padding:24px 36px 8px;">
+
+              <!-- Email -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:2px;">
+                <tr>
+                  <td style="padding:12px 0;border-bottom:1px solid #1e3a45;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:11px;color:#5a8a9a;letter-spacing:1px;
+                                    text-transform:uppercase;width:110px;">
+                          Email
+                        </td>
+                        <td style="font-size:14px;color:#e0f4f8;text-align:right;">
+                          {{email}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- First Name -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:2px;">
+                <tr>
+                  <td style="padding:12px 0;border-bottom:1px solid #1e3a45;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:11px;color:#5a8a9a;letter-spacing:1px;
+                                    text-transform:uppercase;width:110px;">
+                          First name
+                        </td>
+                        <td style="font-size:14px;color:#e0f4f8;text-align:right;">
+                          {{firstName}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Tier -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:2px;">
+                <tr>
+                  <td style="padding:12px 0;border-bottom:1px solid #1e3a45;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:11px;color:#5a8a9a;letter-spacing:1px;
+                                    text-transform:uppercase;width:110px;">
+                          Tier
+                        </td>
+                        <td style="font-size:14px;color:#e0f4f8;text-align:right;">
+                          {{tier}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Source -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:2px;">
+                <tr>
+                  <td style="padding:12px 0;border-bottom:1px solid #1e3a45;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:11px;color:#5a8a9a;letter-spacing:1px;
+                                    text-transform:uppercase;width:110px;">
+                          Source
+                        </td>
+                        <td style="font-size:14px;color:#e0f4f8;text-align:right;">
+                          {{utmSource}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Timestamp -->
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;margin-bottom:2px;">
+                <tr>
+                  <td style="padding:12px 0;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:11px;color:#5a8a9a;letter-spacing:1px;
+                                    text-transform:uppercase;width:110px;">
+                          Signed up
+                        </td>
+                        <td style="font-size:14px;color:#e0f4f8;text-align:right;">
+                          {{timestamp}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 36px 28px;">
+              <table cellpadding="0" cellspacing="0" border="0"
+                     style="width:100%;background-color:#0f2027;
+                            border-radius:10px;padding:16px 20px;">
+                <tr>
+                  <td>
+                    <p style="margin:0;font-size:11px;color:#3a6a7a;
+                               line-height:1.6;letter-spacing:0.3px;">
+                      This is an automated notification from your MomDom waitlist.
+                      Manage signups at
+                      <a href="https://momdom.app"
+                         style="color:#2EC4E6;text-decoration:none;">
+                        momdom.app
+                      </a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Card -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -20,7 +20,8 @@ export const handler = async (event) => {
   if (event.httpMethod !== "PATCH") return cors({ error: "Method not allowed" }, 405);
 
   const params = event.queryStringParameters || {};
-  const adminPassword = process.env.ADMIN_PASSWORD || "momdom2026";
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) return cors({ error: "Server misconfiguration" }, 500);
   if (params.password !== adminPassword) return cors({ error: "Unauthorized" }, 401);
 
   let body;

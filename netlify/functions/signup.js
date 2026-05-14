@@ -1,5 +1,22 @@
 // netlify/functions/signup.js
+import { readFileSync } from "fs";
+import { resolve } from "path";
+import { Resend } from "resend";
 import { getDb } from "./_db.js";
+
+const TIER_LABELS = {
+  founding_circle: "Founding Circle",
+};
+function tierLabel(slug) {
+  return TIER_LABELS[slug] ?? slug.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function fillTemplate(template, vars) {
+  return Object.entries(vars).reduce(
+    (html, [key, val]) => html.replaceAll(`{{${key}}}`, val ?? ""),
+    template
+  );
+}
 
 function cors(body, status = 200) {
   return {
@@ -52,9 +69,11 @@ export const handler = async (event) => {
     const position = count + 1;
     const tier = await getActiveTier(db);
 
+    const firstName = (body.firstName || "").trim() || null;
+
     await col.insertOne({
       email,
-      firstName: (body.firstName || "").trim() || null,
+      firstName,
       position,
       tier,
       status: "pending",
@@ -65,6 +84,65 @@ export const handler = async (event) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+
+    if (process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+
+      const adminTo = process.env.ADMIN_EMAIL;
+      if (!adminTo) console.warn("ADMIN_EMAIL env var not set — admin notification skipped");
+
+      const adminHtml = readFileSync(
+        resolve(process.cwd(), "email-templates/email-admin.html"),
+        "utf8"
+      );
+      const subscriberHtml = readFileSync(
+        resolve(process.cwd(), "email-templates/email-subscriber.html"),
+        "utf8"
+      );
+
+      const timestamp = new Date().toLocaleString("en-US", {
+        month: "long", day: "numeric", year: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      });
+
+      const emailPromises = [];
+
+      if (adminTo) {
+        emailPromises.push(
+          resend.emails.send({
+            from: "notifications@momdom.app",
+            to: adminTo,
+            subject: `New waitlist signup #${position} — ${tier}`,
+            html: fillTemplate(adminHtml, {
+              position,
+              email,
+              firstName: firstName ?? "—",
+              tier: tierLabel(tier),
+              utmSource: body.utm_source || "direct",
+              timestamp,
+            }),
+          })
+        );
+      }
+
+      emailPromises.push(
+        resend.emails.send({
+          from: "heymama.momdom@gmail.com",
+          to: email,
+          subject: "You're on the MomDom waitlist! 🎉",
+          html: fillTemplate(subscriberHtml, {
+            firstName: firstName ?? "Friend",
+            position,
+            tier: tierLabel(tier),
+          }),
+        })
+      );
+
+      const results = await Promise.allSettled(emailPromises);
+      results.forEach((r, i) => {
+        if (r.status === "rejected") console.error(`Resend email[${i}] failed:`, r.reason);
+      });
+    }
 
     return cors({ success: true, position, tier, message: `You're in at #${position}!` });
   } catch (err) {
