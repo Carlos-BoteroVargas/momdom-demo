@@ -7,3 +7,8 @@ node_modules/
 
 package-lock.json
 scripts/founding-emails.csv
+scripts/founding-emails.txt
+scripts/responses.csv
+
+docs/*
+.superpowers/*
