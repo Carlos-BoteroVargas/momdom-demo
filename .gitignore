@@ -10,7 +10,7 @@ scripts/founding-emails.csv
 scripts/founding-emails.txt
 scripts/responses.csv
 
-# email-templates/*
+email-templates/Image*
 
 docs/*
 .superpowers/*

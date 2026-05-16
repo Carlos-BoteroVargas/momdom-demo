@@ -3,226 +3,386 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MomDom — You're on the list!</title>
-  <!--
-    PREVIEW NOTE FOR LESLEY:
-    Variables that will be injected by the Netlify function at send time:
-      {{firstName}}   → subscriber's first name (falls back to "Friend")
-      {{position}}    → waitlist number, e.g. 32
-      {{tier}}        → "Founding Circle"
-  -->
+  <title>MomDom. Waitlist Confirmation Email</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --momdom-blue: #2EC4E6;
+      --deep-navy: #112B5A;
+      --warm-off-white: #FCFBF9;
+      --white: #FFFFFF;
+      --warm-grey: #D9D9D9;
+      --soft-lavender: #B9A6E3;
+      --gentle-sage: #9FD3B0;
+      --blush-rose: #fe5da3;
+      --light-blue-box: #F4FAFF; 
+      --success-bg: #E4F2DD;
+      --tomorrow-lavender: #EBDDF7;
+      --reminder-pink: #F8DDE5;
+      --divider: #E6E9EF;
+    }
+    /* EEF7FD */
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--warm-off-white);
+      color: var(--deep-navy);
+      font-family: Inter, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 100%;
+      padding: 0;
+      background: var(--warm-off-white);
+    }
+
+    .email-card {
+      width: 100%;
+      max-width: 600px;
+      margin: 10px auto;
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(17, 43, 90, 0.08);
+    }
+
+    .header {
+      background: var(--momdom-blue);
+      text-align: center;
+      padding: 34px 24px 24px;
+    }
+
+    .brand {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 64px;
+      line-height: 0.95;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin: 0;
+    }
+
+    .tagline {
+      margin: 18px 0 0;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+    }
+
+    .lavender-rule { height: 8px; background: var(--soft-lavender); }
+
+    .content { padding: 32px 40px 24px; }
+
+    .eyebrow {
+      color: var(--momdom-blue);
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+    }
+
+    h1 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 48px;
+      line-height: 1.06;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--deep-navy);
+      margin: 0 0 24px;
+    }
+
+    .blue-text { color: var(--momdom-blue); }
+    .pink-text { color: var(--blush-rose); }
+
+    p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--deep-navy);
+    }
+
+    .intro { max-width: 430px; margin-bottom: 20px; }
+    .strong-line { font-weight: 700; margin-bottom: 32px; }
+
+    .spot-card {
+      background: var(--light-blue-box);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 0.6fr 1px 1.55fr;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .spot-label {
+      color: var(--momdom-blue);
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .spot-number-wrap { position: relative; display: inline-block; }
+
+    .spot-number {
+      color: var(--momdom-blue);
+      font-family: "Forum", Georgia, serif;
+      font-size: 72px;
+      line-height: 0.95;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+
+    .spark {
+      position: absolute;
+      right: -20px;
+      top: -8px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .spot-divider {
+      width: 1px;
+      height: 116px;
+      background: var(--momdom-blue);
+      opacity: 0.85;
+    }
+
+    .spot-message {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .balloons { width: 84px; height: 128px; display: block; }
+
+    .thank-you {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--deep-navy);
+      margin-bottom: 20px;
+    }
+
+    .meaningful {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--momdom-blue);
+    }
+
+    .section-title {
+      color: var(--momdom-blue);
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+    }
+
+    .steps { margin-bottom: 24px; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 68px 1px 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .step:first-child { padding-top: 0; }
+
+    .step-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-icon svg { width: 34px; height: 34px; }
+    .step-divider { width: 1px; height: 56px; background: var(--divider); }
+
+    .step-heading {
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .step-copy { font-size: 15px; line-height: 1.45; }
+    .green { color: #2F8F3A; }
+    .purple { color: #7A52C2; }
+    .pink { color: #F06292; }
+
+    .signoff {
+      background: var(--light-blue-box);
+      border-radius: 16px;
+      padding: 18px 28px;
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .hearts { width: 48px; height: 44px; }
+    .signoff p {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 16px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .signature {
+      display: block;
+      margin-top: 4px;
+      color: var(--momdom-blue);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 16px 24px 26px;
+      color: #6B7893;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footer a {
+      color: var(--momdom-blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer-brand {
+      display: block;
+      color: var(--momdom-blue);
+      font-weight: 400;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .email-card { border-radius: 0; border-left: 0; border-right: 0; }
+      .brand { font-size: 52px; }
+      .tagline { font-size: 11px; letter-spacing: 5px; }
+      .content { padding: 28px 24px 22px; }
+      h1 { font-size: 42px; }
+      .spot-card { grid-template-columns: 1fr; gap: 18px; padding: 24px; }
+      .spot-divider { width: 100%; height: 1px; }
+      .spot-message { grid-template-columns: 72px 1fr; }
+      .balloons { width: 72px; }
+      .step { grid-template-columns: 56px 1fr; gap: 16px; }
+      .step-divider { display: none; }
+      .signoff { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    }
+  </style>
 </head>
-<body style="margin:0;padding:0;background-color:#f0f9fc;font-family:'Georgia',serif;">
+<body>
+  <main class="page">
+    <section class="email-card" role="article" aria-label="MomDom waitlist confirmation email">
+      <header class="header">
+        <h2 class="brand">MomDom.</h2>
+        <p class="tagline">Household Operating System</p>
+      </header>
+      <div class="lavender-rule"></div>
 
-  <!-- Preheader (hidden preview text in inbox) -->
-  <div style="display:none;max-height:0;overflow:hidden;color:#f0f9fc;">
-    You're #{{position}} on the MomDom waitlist — welcome to the Founding Circle. ✨
-  </div>
+      <div class="content">
+        <p class="eyebrow">Welcome, {{firstName}}!</p>
+        <!-- {{firstName}} -->
 
-  <!-- Outer wrapper -->
-  <table width="100%" cellpadding="0" cellspacing="0" border="0"
-         style="background-color:#f0f9fc;padding:40px 16px;">
-    <tr>
-      <td align="center">
+        <h1>You’re officially<br><span class="blue-text">on the list.</span></h1>
 
-        <!-- Card -->
-        <table width="600" cellpadding="0" cellspacing="0" border="0"
-               style="max-width:600px;width:100%;background-color:#ffffff;
-                      border-radius:20px;overflow:hidden;
-                      box-shadow:0 4px 32px rgba(46,196,230,0.10);">
+        <p class="intro">MomDom is a system being built to finally help carry all of the things that moms carry in their heads.</p>
+        <p class="strong-line">You’re one of the first to say <span class="pink-text">yes</span> to that idea.</p>
 
-          <!-- Header band -->
-          <tr>
-            <td style="background-color:#2EC4E6;padding:36px 48px 28px;text-align:center;">
-              <!-- Wordmark -->
-              <div style="font-family:'Georgia',serif;font-size:34px;
-                          color:#ffffff;letter-spacing:-1px;line-height:1;">
-                Mom<span style="color:#d4f5fc;font-style:italic;">Dom</span>
-              </div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.75);
-                          letter-spacing:3px;text-transform:uppercase;
-                          margin-top:6px;">
-                Household Operating System
-              </div>
-            </td>
-          </tr>
+        <section class="spot-card" aria-label="Waitlist spot">
+          <div>
+            <div class="spot-label">Your Spot</div>
+            <div class="spot-number-wrap">
+              <span class="spot-number">#{{position}}</span>
+              <!-- {{position}} -->
+              <img src="https://momdom.app/spark.png" class="spark" alt="" />
+            </div>
+          </div>
 
-          <!-- Balloon accent bar -->
-          <tr>
-            <td style="background:linear-gradient(90deg,#2EC4E6 0%,#B8A4D8 50%,#F2A7C3 100%);
-                       height:4px;font-size:0;line-height:0;">&nbsp;</td>
-          </tr>
+          <div class="spot-divider" aria-hidden="true"></div>
 
-          <!-- Body -->
-          <tr>
-            <td style="padding:48px 48px 32px;">
+          <div class="spot-message">
+            <img src="https://momdom.app/baloons.png" class="balloons" alt="Celebration balloons" />
+            <div>
+              <p class="thank-you">Thank you for believing in this before it exists.</p>
+              <p class="meaningful">You’re helping build something meaningful.</p>
+            </div>
+          </div>
+        </section>
 
-              <!-- Greeting -->
-              <p style="margin:0 0 8px;font-size:13px;color:#2EC4E6;
-                         letter-spacing:2px;text-transform:uppercase;
-                         font-family:Arial,sans-serif;">
-                Welcome, {{firstName}} 👋
-              </p>
-              <h1 style="margin:0 0 24px;font-size:30px;color:#1a3a42;
-                          line-height:1.2;font-weight:normal;">
-                You're officially<br/>
-                <span style="color:#2EC4E6;font-style:italic;">on the list.</span>
-              </h1>
+        <h3 class="section-title">What Happens Next</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-icon" style="background:#E4F2DD;">
+              <img src="https://momdom.app/1.png" alt="Seedling" width="56" height="56" />
+            </div>
+            <div class="step-divider" aria-hidden="true"></div>
+            <div>
+              <div class="step-heading green">1. We build.</div>
+              <p class="step-copy">We’re heads-down building the pilot.<br>You’ll hear from us when early access opens.</p>
+            </div>
+          </div>
 
-              <p style="margin:0 0 28px;font-size:16px;color:#4a6572;
-                         line-height:1.7;font-family:Arial,sans-serif;">
-                MomDom is being built for caregivers who carry everything in their heads —
-                and deserve a system that carries it with them. You're one of the first
-                to say yes to that idea.
-              </p>
+          <div class="step">
+            <div class="step-icon" style="background:#EBDDF7;">
+              <img src="https://momdom.app/2.png" alt="Community" width="56" height="56" />
+            </div>
+            <div class="step-divider" aria-hidden="true"></div>
+            <div>
+              <div class="step-heading purple">2. You get in first.</div>
+              <p class="step-copy">As one of the first families here, you’ll receive early access, behind-the-scenes updates, and opportunities to help shape MomDom as it grows.</p>
+            </div>
+          </div>
 
-              <!-- Position badge -->
-              <table cellpadding="0" cellspacing="0" border="0"
-                     style="margin:0 0 32px;width:100%;">
-                <tr>
-                  <td style="background:linear-gradient(135deg,#eaf9fd 0%,#f3eeff 100%);
-                              border-radius:14px;padding:24px 28px;
-                              border-left:4px solid #2EC4E6;">
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td>
-                          <div style="font-size:11px;color:#2EC4E6;letter-spacing:2px;
-                                      text-transform:uppercase;font-family:Arial,sans-serif;
-                                      margin-bottom:4px;">Your spot</div>
-                          <div style="font-size:42px;color:#1a3a42;font-family:'Georgia',serif;
-                                      font-weight:normal;line-height:1;">
-                            #{{position}}
-                          </div>
-                        </td>
-                        <td align="right" valign="middle">
-                          <div style="background-color:#2EC4E6;color:#ffffff;
-                                      font-size:11px;letter-spacing:1.5px;
-                                      text-transform:uppercase;font-family:Arial,sans-serif;
-                                      padding:8px 16px;border-radius:20px;
-                                      white-space:nowrap;">
-                            🌱 Founding Circle
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
+          <div class="step">
+            <div class="step-icon" style="background:#F8DDE5;">
+              <img src="https://momdom.app/3.png" alt="Envelope" width="56" height="56" />
+            </div>
+            <div class="step-divider" aria-hidden="true"></div>
+            <div>
+              <div class="step-heading pink">3. Stay close.</div>
+              <p class="step-copy">Watch your inbox. We’ll reach out with updates, sneak peeks, and the moment your invite is ready.</p>
+            </div>
+          </div>
+        </div>
 
-              <!-- What's next -->
-              <p style="margin:0 0 12px;font-size:12px;color:#2EC4E6;
-                         letter-spacing:2px;text-transform:uppercase;
-                         font-family:Arial,sans-serif;">
-                What happens next
-              </p>
+        <section class="signoff">
+          <img src="https://momdom.app/hearts2.png" class="hearts" alt="Two hearts" />
+          <p>Thank you for being here at the very beginning.<span class="signature">— Lesley, founder of MomDom</span></p>
+        </section>
+      </div>
 
-              <!-- Steps -->
-              <table cellpadding="0" cellspacing="0" border="0"
-                     style="margin:0 0 36px;width:100%;">
-                <tr>
-                  <td style="padding:0 0 16px;">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td valign="top" style="padding-right:14px;">
-                          <div style="width:28px;height:28px;border-radius:50%;
-                                      background-color:#2EC4E6;color:#fff;
-                                      font-size:12px;font-family:Arial,sans-serif;
-                                      text-align:center;line-height:28px;">1</div>
-                        </td>
-                        <td valign="top">
-                          <p style="margin:4px 0 0;font-size:14px;color:#4a6572;
-                                     line-height:1.6;font-family:Arial,sans-serif;">
-                            <strong style="color:#1a3a42;">We build.</strong>
-                            The MomDom team is heads-down on the pilot. You'll hear from us
-                            when early access opens.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:0 0 16px;">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td valign="top" style="padding-right:14px;">
-                          <div style="width:28px;height:28px;border-radius:50%;
-                                      background-color:#B8A4D8;color:#fff;
-                                      font-size:12px;font-family:Arial,sans-serif;
-                                      text-align:center;line-height:28px;">2</div>
-                        </td>
-                        <td valign="top">
-                          <p style="margin:4px 0 0;font-size:14px;color:#4a6572;
-                                     line-height:1.6;font-family:Arial,sans-serif;">
-                            <strong style="color:#1a3a42;">You get in first.</strong>
-                            Founding Circle members get priority access, input on features,
-                            and founding pricing — locked for life.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <table cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td valign="top" style="padding-right:14px;">
-                          <div style="width:28px;height:28px;border-radius:50%;
-                                      background-color:#F2A7C3;color:#fff;
-                                      font-size:12px;font-family:Arial,sans-serif;
-                                      text-align:center;line-height:28px;">3</div>
-                        </td>
-                        <td valign="top">
-                          <p style="margin:4px 0 0;font-size:14px;color:#4a6572;
-                                     line-height:1.6;font-family:Arial,sans-serif;">
-                            <strong style="color:#1a3a42;">Stay close.</strong>
-                            Watch your inbox. We'll reach out with updates, sneak peeks,
-                            and the moment your invite is ready.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Closing note -->
-              <p style="margin:0 0 4px;font-size:15px;color:#4a6572;
-                         line-height:1.7;font-family:Arial,sans-serif;">
-                Thank you for believing in this before it exists.
-              </p>
-              <p style="margin:0;font-size:15px;color:#4a6572;
-                         line-height:1.7;font-family:Arial,sans-serif;">
-                — Lesley &amp; the MomDom team
-              </p>
-
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background-color:#f8feff;border-top:1px solid #e8f7fb;
-                        padding:24px 48px;text-align:center;">
-              <p style="margin:0 0 6px;font-size:11px;color:#9bbec8;
-                         font-family:Arial,sans-serif;letter-spacing:0.5px;">
-                You're receiving this because you signed up at
-                <a href="https://momdom.app" style="color:#2EC4E6;text-decoration:none;">
-                  momdom.app
-                </a>
-              </p>
-              <p style="margin:0;font-size:11px;color:#9bbec8;font-family:Arial,sans-serif;">
-                MomDom
-              </p>
-            </td>
-          </tr>
-
-        </table>
-        <!-- /Card -->
-
-      </td>
-    </tr>
-  </table>
-
+      <footer class="footer">
+        You’re receiving this because you signed up at <a href="https://momdom.app">momdom.app</a>
+        <span class="footer-brand">MomDom.</span>
+      </footer>
+    </section>
+  </main>
 </body>
 </html>
