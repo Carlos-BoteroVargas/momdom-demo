@@ -128,7 +128,7 @@ export const handler = async (event) => {
       emailPromises.push(
         resend.emails.send({
           from: "Lesley at MomDom <hello@momdom.app>",
-          reply_to: "heymama.momdom@gmail.com",
+          replyTo: "heymama.momdom@gmail.com",
           to: email,
           subject: "You're on the MomDom waitlist! 🎉",
           html: fillTemplate(subscriberHtml, {
